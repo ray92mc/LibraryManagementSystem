@@ -12,7 +12,7 @@ class ListBooksComponent extends Component {
     componentDidMount(){
         BookService.getBooks().then((res) =>{
             this.setState({books: res.data});
-        })
+        });
     }
     render() {
         return (
