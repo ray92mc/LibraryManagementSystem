@@ -13,6 +13,7 @@ import java.util.List;
 @Entity
 @Table(name="users")
 public class User implements UserDetails {
+    private static final long serialVersionUID = 1840361243951715062L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
