@@ -1,5 +1,7 @@
 package com.x00179223.librarybackend.model;
 
+import org.springframework.lang.NonNull;
+
 import javax.persistence.*;
 
 @Entity
@@ -11,19 +13,31 @@ public class Book {
     @Column(name = "title")
     private String title;
     @Column(name = "author")
+    @NonNull
     private String author;
 
-    public Book(){
+    @Column(name = "isbn")
+    @NonNull
+    private String ISBN;
 
-    }
+    public Book(){}
 
-    public Book(String title, String author) {
+    public Book(String title, String author, String isbn) {
         this.title = title;
         this.author = author;
+        this.ISBN = isbn;
     }
 
     public long getId() {
         return id;
+    }
+
+    public String getISBN() {
+        return ISBN;
+    }
+
+    public void setISBN(String ISBN) {
+        this.ISBN = ISBN;
     }
 
     public void setId(long id) {
@@ -45,4 +59,5 @@ public class Book {
     public void setAuthor(String author) {
         this.author = author;
     }
+
 }
