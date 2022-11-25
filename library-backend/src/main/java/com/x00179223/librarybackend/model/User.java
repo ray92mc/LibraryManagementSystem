@@ -5,6 +5,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
@@ -19,21 +20,26 @@ public class User implements UserDetails {
     private long id;
 
     @Column(name = "first_name")
+    @NotNull
     private String firstName;
 
     @Column(name = "last_name")
+    @NotNull
     private String lastName;
 
     @Column(name = "email_address")
+    @NotNull
     private String emailAddress;
 
     @Column(name = "account_status")
     private AccountStatus accountStatus;
 
     @Column(name="username")
+    @NotNull
     private String username;
 
     @Column(name="password")
+    @NotNull
     private String password;
 
     public User(){
@@ -44,7 +50,7 @@ public class User implements UserDetails {
         this.firstName = firstName;
         this.lastName = lastName;
         this.emailAddress = emailAddress;
-        this.accountStatus = accountStatus;
+        this.accountStatus = AccountStatus.ACTIVE;
         this.username = username;
         this.password = password;
     }

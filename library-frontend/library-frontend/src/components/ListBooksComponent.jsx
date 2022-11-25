@@ -24,6 +24,7 @@ class ListBooksComponent extends Component {
                             <tr>
                                 <th>Title</th>
                                 <th>Author</th>
+                                <th>ISBN</th>
                                 <th>Actions</th>
                             </tr>
                         </thead>
@@ -34,6 +35,7 @@ class ListBooksComponent extends Component {
                                     <tr key = {book.id}>
                                         <td>{book.title}</td>
                                         <td>{book.author}</td>
+                                        <td>{book.isbn}</td>
                                     </tr>
                                 )
                             }
