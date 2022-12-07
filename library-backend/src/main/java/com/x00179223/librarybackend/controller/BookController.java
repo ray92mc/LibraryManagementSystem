@@ -7,9 +7,9 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@CrossOrigin(origins = "http://localhost:3000")
 @RestController
 @RequestMapping("/books")
+@CrossOrigin(origins = "http://localhost:3000")
 public class BookController {
 
     @Autowired
@@ -24,6 +24,7 @@ public class BookController {
     public Book addBook(Book book){
         return bookRepository.save(book);
     }
+
 
     @DeleteMapping
     public void deleteBookById(long id){

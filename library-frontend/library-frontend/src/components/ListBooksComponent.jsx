@@ -1,5 +1,9 @@
 import React, { Component } from 'react';
 import BookService from '../services/BookService';
+import {Card, Table} from "react-bootstrap";
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
+import {faList} from '@fortawesome/free-solid-svg-icons';
+
 
 class ListBooksComponent extends Component {
     constructor(props){
@@ -16,11 +20,13 @@ class ListBooksComponent extends Component {
     }
     render() {
         return (
-            <div>
-                <h2 className='text-center'>Book List</h2>
-                <div className='row'>
-                    <table className='table table-striped table-bordered'>
-                        <thead>
+            <Card className={"border border-dark bg-dark text-white"}>
+                <Card.Header><FontAwesomeIcon icon={faList}/>
+                    Book List
+                </Card.Header>
+                <Card.Body>
+                    <Table bordered hover striped variant="dark">
+                    <thead>
                             <tr>
                                 <th>Title</th>
                                 <th>Author</th>
@@ -40,9 +46,9 @@ class ListBooksComponent extends Component {
                                 )
                             }
                         </tbody>
-                    </table>
-                </div>
-            </div>
+                    </Table>
+                </Card.Body>
+            </Card>
         );
     }
 }
