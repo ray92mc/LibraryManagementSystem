@@ -51,13 +51,13 @@ class LoginComponent extends Component {
                         <Col>
                         <Form.Group controlId='formGridEmail'>
                             <Form.Label style={{margin:"5px"}}>Email</Form.Label>
-                            <Form.Control name="email" required type="text" className={"bg-dark text-white"} value={email} onChange={this.credentialChange} placeholder="Enter Email"></Form.Control>
+                            <Form.Control name="email" autoComplete="off" required type="text" className={"bg-dark text-white"} value={email} onChange={this.credentialChange} placeholder="Enter Email"></Form.Control>
                         </Form.Group>
                         </Col>
                         <Col>
                         <Form.Group controlId='formGridPassword'>
                             <Form.Label style={{margin:"5px"}}>Password</Form.Label>
-                            <Form.Control name="password" required type="password" className={"bg-dark text-white"} value={password} onChange={this.credentialChange} placeholder="Enter Password"></Form.Control>
+                            <Form.Control name="password" autoComplete="off" required type="password" className={"bg-dark text-white"} value={password} onChange={this.credentialChange} placeholder="Enter Password"></Form.Control>
                         </Form.Group>
                         </Col> 
                         </Row>   

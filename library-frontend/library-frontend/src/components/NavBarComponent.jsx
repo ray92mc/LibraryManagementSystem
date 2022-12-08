@@ -38,6 +38,7 @@ class NavBarComponent extends Component {
                     Library
                 </Link>
                 {this.props.auth.isLoggedIn ? userLinks : guestLinks}
+                {this.props.auth.isLoggedIn ? guestLinks : userLinks}
                 
             </Navbar>
         );

@@ -26,7 +26,7 @@ export const logoutUser = () => {
         dispatch({
             type: AT.LOGOUT_REQUEST
         });
-        localStorage.removeItem('jwtToken');
+        localStorage.removeItem('jwtToken')
         dispatch(success(false));
     }
 };
