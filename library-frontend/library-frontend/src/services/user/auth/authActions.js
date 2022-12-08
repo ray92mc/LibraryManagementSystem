@@ -1,16 +1,23 @@
-import {LOGIN_REQUEST, SUCCESS, FAILURE} from './authTypes';
+import {LOGIN_REQUEST, LOGOUT_REQUEST, SUCCESS, FAILURE} from './authTypes';
 
 
 export const authenticateUser = (email, password) => {
     return dispatch => {
         dispatch(loginRequest());
         if(email === "test" && password === "test"){
-            dispatch(success());
+            dispatch(success(true));
         } else {
             dispatch(failure());
         }
         
     };
+};
+
+export const logoutUser = () => {
+    return dispatch => {
+        dispatch(logoutRequest());
+        dispatch(success(false));
+    }
 };
 
 const loginRequest = () => {
@@ -19,10 +26,16 @@ const loginRequest = () => {
     };
 };
 
-const success = () => {
+const logoutRequest = () => {
+    return {
+        type: LOGOUT_REQUEST
+    };
+};
+
+const success = isLoggedIn => {
     return {
         type: SUCCESS,
-        payload:true
+        payload:isLoggedIn
     };
 };
 

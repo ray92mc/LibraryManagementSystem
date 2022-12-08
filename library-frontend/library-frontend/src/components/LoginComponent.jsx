@@ -35,7 +35,7 @@ class LoginComponent extends Component {
                 this.resetLoginForm();
                 this.setState({"error":"Invalid credentials"});
             }
-        })
+        }, 500);
     };
 
     render() {

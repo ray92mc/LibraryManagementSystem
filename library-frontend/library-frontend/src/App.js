@@ -15,13 +15,14 @@ function App() {
   return (
     <div>
       <Router>
-          <NavBarComponent/>
+          <Provider store={store}><NavBarComponent/></Provider>
             <div className="container">
               <Routes> 
                 <Route exact path= "/" element = {<HomepageComponent/>} />
                 <Route exact path= "/books" element = {<ListBooksComponent/>}/>
                 <Route exact path= "/books/add" element = {<AddBooksComponent/>}/>
                 <Route exact path= "/login" element = {<Provider store={store}><LoginComponent/></Provider>}/>
+                <Route exact path= "/logout" element = {<Provider store={store}><LoginComponent/></Provider>}/>
               </Routes>
             </div>
           <FooterComponent/>
