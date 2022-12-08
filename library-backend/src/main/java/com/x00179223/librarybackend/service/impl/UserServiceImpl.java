@@ -1,4 +1,4 @@
-package com.x00179223.librarybackend.impl;
+package com.x00179223.librarybackend.service.impl;
 
 import com.x00179223.librarybackend.model.User;
 import com.x00179223.librarybackend.repository.UserRepository;
