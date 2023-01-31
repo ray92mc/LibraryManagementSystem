@@ -4,7 +4,7 @@ import com.x00179223.librarybackend.exception.BookNotFoundException;
 import com.x00179223.librarybackend.exception.ResourceNotFoundException;
 import com.x00179223.librarybackend.model.Book;
 import com.x00179223.librarybackend.resource.Resource;
-import com.x00179223.librarybackend.service.IService;
+import com.x00179223.librarybackend.service.impl.BookServiceImpl;
 import org.codehaus.jettison.json.JSONException;
 import org.codehaus.jettison.json.JSONObject;
 import org.slf4j.LoggerFactory;
@@ -21,14 +21,14 @@ import java.util.Optional;
 import org.slf4j.Logger;
 
 @RestController
-@RequestMapping("/books")
+@RequestMapping("/api/books")
 @CrossOrigin(origins = "http://localhost:3000")
 public class BookResourceImpl implements Resource<Book> {
 
     private static Logger log = LoggerFactory.getLogger(BookResourceImpl.class);
 
     @Autowired
-    private IService<Book> bookService;
+    private BookServiceImpl bookService;
 
     @Override
     public ResponseEntity<Collection<Book>> findAll() {

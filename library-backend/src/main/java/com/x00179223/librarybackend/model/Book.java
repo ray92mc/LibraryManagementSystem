@@ -1,8 +1,8 @@
 package com.x00179223.librarybackend.model;
 
-import org.springframework.lang.NonNull;
-
+import java.util.List;
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "books")
@@ -10,38 +10,29 @@ public class Book {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-    @Column(name = "title")
-    private String title;
-    @Column(name = "author")
-    @NonNull
-    private String author;
 
-    @Column(name = "isbn")
-    @NonNull
-    private String ISBN;
+    @NotNull
+    private String title;
+
+    @ManyToOne
+    private Author author;
+
+    @ManyToOne
+    private Publisher publisher;
+
+    @ManyToMany(mappedBy = "books")
+    private List<Category> categories;
+
+    private int copiesAvailable;
 
     public Book(){}
 
-    public Book(String title, String author, String isbn) {
+    public Book(String title, Author author, Publisher publisher, List<Category> categories, int copiesAvailable) {
         this.title = title;
         this.author = author;
-        this.ISBN = isbn;
-    }
-
-    public long getId() {
-        return id;
-    }
-
-    public String getISBN() {
-        return ISBN;
-    }
-
-    public void setISBN(String ISBN) {
-        this.ISBN = ISBN;
-    }
-
-    public void setId(long id) {
-        this.id = id;
+        this.publisher = publisher;
+        this.categories = categories;
+        this.copiesAvailable = copiesAvailable;
     }
 
     public String getTitle() {
@@ -52,12 +43,35 @@ public class Book {
         this.title = title;
     }
 
-    public String getAuthor() {
+    public Author getAuthor() {
         return author;
     }
 
-    public void setAuthor(String author) {
+    public void setAuthor(Author author) {
         this.author = author;
     }
 
+    public Publisher getPublisher() {
+        return publisher;
+    }
+
+    public void setPublisher(Publisher publisher) {
+        this.publisher = publisher;
+    }
+
+    public List<Category> getCategories() {
+        return categories;
+    }
+
+    public void setCategories(List<Category> categories) {
+        this.categories = categories;
+    }
+
+    public int getCopiesAvailable() {
+        return copiesAvailable;
+    }
+
+    public void setCopiesAvailable(int copiesAvailable) {
+        this.copiesAvailable = copiesAvailable;
+    }
 }
