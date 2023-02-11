@@ -26,6 +26,7 @@ public class AuthenticationService {
                 .email(request.getEmail())
                 .password(passwordEncoder.encode(request.getPassword()))
                 .role(Role.USER)
+                .fine(0.0)
                 .build();
         userService.save(user);
         var jwtToken = jwtService.generateToken(user);
@@ -58,6 +59,7 @@ public class AuthenticationService {
                 .email(request.getEmail())
                 .password(passwordEncoder.encode(request.getPassword()))
                 .role(Role.ADMIN)
+                .fine(0.0)
                 .build();
         userService.save(user);
         var jwtToken = jwtService.generateToken(user);

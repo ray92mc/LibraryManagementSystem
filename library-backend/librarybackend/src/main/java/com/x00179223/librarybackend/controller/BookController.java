@@ -2,17 +2,18 @@ package com.x00179223.librarybackend.controller;
 
 import com.x00179223.librarybackend.model.Book;
 import com.x00179223.librarybackend.service.BookService;
-import com.x00179223.librarybackend.service.BookServiceImpl;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/books")
+@RequestMapping("api/v1/books")
 @CrossOrigin(origins = "http://localhost:3000")
 public class BookController {
 
+    @Autowired
     private final BookService bookService;
 
     public BookController(BookService bookService) {
