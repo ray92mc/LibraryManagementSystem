@@ -2,11 +2,12 @@ import { useRef, useState, useEffect } from "react";
 import { faCheck, faTimes, faInfoCircle } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import axios from "../api/axios";
+import { Link } from "react-router-dom";
 
 const USER_REGEX = /^[A-z][A-z0-9-_]{2,23}$/;
 const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
 const EMAIL_REGEX = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
-const REGISTER_URL = '/api/v1/auth/register';
+const REGISTER_URL = '/auth/register';
 
 const Register = () => {
     const firstnameRef = useRef();
@@ -111,7 +112,7 @@ const Register = () => {
             <section>
                 <h1>Success!</h1>
                 <p>
-                    <a href="#">Sing In</a>
+                    <a href="/login">Sing In</a>
                 </p>
             </section>
         ) : (
@@ -251,8 +252,7 @@ const Register = () => {
             <p>
                 Already registered?<br />
                 <span className="line">
-                    {/*put router link here*/}
-                    <a href="#">Sign In</a>
+                    <Link to="/login">Sign In</Link>
                 </span>
             </p>
         </section>

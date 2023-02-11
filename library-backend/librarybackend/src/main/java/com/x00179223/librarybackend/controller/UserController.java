@@ -31,4 +31,8 @@ public class UserController {
         return userService.findByEmail(email);
     }
 
+    @DeleteMapping("/{id}")
+    public void deleteUser(@PathVariable Long id){
+        userService.deleteById(id);
+    }
 }

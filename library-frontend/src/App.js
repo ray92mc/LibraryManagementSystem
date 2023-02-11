@@ -8,6 +8,7 @@ import Unauthorized from './components/Unauthorized';
 import LinkPage from './components/LinkPage';
 import Home from './components/Home';
 import Users from './components/Users';
+import Admin from './components/Admin';
 import { Routes, Route } from 'react-router-dom';
 
 function App() {
@@ -30,6 +31,7 @@ function App() {
         {/* admin routes */}
         <Route element={<RequireAuth allowedRoles={['ADMIN']}/>}>
           <Route path='users' element={<Users />} />
+          <Route path='admin' element={<Admin />} />
 
         </Route>
 

@@ -4,7 +4,8 @@ import {Link, useNavigate, useLocation} from 'react-router-dom';
 
 
 import axios from "../api/axios";
-const LOGIN_URL = '/api/v1/auth/authenticate';
+
+const LOGIN_URL = '/auth/authenticate';
 
 const Login = () => {
     const { setAuth } = useAuth();
@@ -27,7 +28,7 @@ const Login = () => {
     useEffect(() => {
         setErrMsg('');
     }, [email, pwd])
-
+      
     const handleSubmit = async (e) => {
         e.preventDefault();
 
@@ -41,8 +42,10 @@ const Login = () => {
 
             console.log(response?.data);
 
-            const token = response.data.token;
-            const role = response.data.role;
+            const token = response?.data?.token;
+
+            const role = response?.data?.role;
+
             setAuth({email, pwd, token, role});
             setEmail('');
             setPwd('');

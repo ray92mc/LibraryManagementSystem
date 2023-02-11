@@ -1,16 +1,14 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import axios from "../api/axios";
 
-const USERS_URL = "/api/v1/users";
-
-function Users() {
+function UserTable() {
   const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     setLoading(true);
     axios
-      .get(USERS_URL)
+      .get("/users")
       .then((res) => {
         setUsers(res.data);
         setLoading(false);
@@ -24,7 +22,7 @@ function Users() {
   const addUser = (user) => {
     setLoading(true);
     axios
-      .post(USERS_URL, { ...user })
+      .post("users", { ...user })
       .then((res) => {
         setUsers([...users, res.data]);
         setLoading(false);
@@ -38,7 +36,7 @@ function Users() {
   const deleteUser = (id) => {
     setLoading(true);
     axios
-      .delete(USERS_URL)
+      .delete(`/users/${id}`)
       .then(() => {
         setUsers(users.filter((user) => user.id !== id));
         setLoading(false);
@@ -52,7 +50,7 @@ function Users() {
   const updateUser = (id, updatedUser) => {
     setLoading(true);
     axios
-      .put(`/api/v1/users/${id}`, {
+      .put(`/users/${id}`, {
         ...updatedUser,
       })
       .then((res) => {
@@ -75,8 +73,8 @@ function Users() {
         <table>
           <thead>
             <tr>
-              <th>Name</th>
-              <th>Username</th>
+              <th>Firstname</th>
+              <th>Lastname</th>
               <th>Email</th>
               <th>Actions</th>
             </tr>
@@ -84,8 +82,8 @@ function Users() {
           <tbody>
             {users.map((user) => (
               <tr key={user.id}>
-                <td>{user.name}</td>
-                <td>{user.username}</td>
+                <td>{user.firstname}</td>
+                <td>{user.lastname}</td>
                 <td>{user.email}</td>
                 <td>
                   <button onClick={() => updateUser(user.id)}>Edit</button>
@@ -101,4 +99,4 @@ function Users() {
 );
 }
 
-export default Users;
+export default UserTable;
