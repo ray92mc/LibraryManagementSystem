@@ -6,16 +6,23 @@ import Layout from './components/Layout';
 import Missing from './components/Missing';
 import Unauthorized from './components/Unauthorized';
 import LinkPage from './components/LinkPage';
-import Home from './components/Home';
+import Home from './pages/Home';
 import Users from './components/Users';
 import Admin from './components/Admin';
 import { Routes, Route } from 'react-router-dom';
+import About from './pages/About';
+import Contact from './pages/Contact';
 
 function App() {
 
   return (
+    <div>
     <Routes>
       <Route path = "/" element={<Layout />}>
+
+        <Route index element={<Home />} />
+        <Route path="about" element={<About />} />
+        <Route path="contact" element={<Contact />} />
 
         {/* public routes */}
         <Route path="login" element={<Login />} />
@@ -40,6 +47,7 @@ function App() {
 
       </Route>
     </Routes>
+    </div>
   );
 }
 
