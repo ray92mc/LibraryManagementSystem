@@ -44,10 +44,10 @@ const Footer = () => {
                             </address>
                         </div>
                         <div className='social_icons d-flex align-items-center gap-30'>
-                            <a className='text-white' href=''><BsFacebook className='fs-4' /></a>
-                            <a className='text-white' href=''><BsInstagram className='fs-4' /></a>
-                            <a className='text-white' href=''><BsTwitter className='fs-4' /></a>
-                            <a className='text-white' href=''><BsYoutube className='fs-4' /></a>
+                            <a className='text-white' href='google.ie'><BsFacebook className='fs-4' /></a>
+                            <a className='text-white' href='google.ie'><BsInstagram className='fs-4' /></a>
+                            <a className='text-white' href='google.ie'><BsTwitter className='fs-4' /></a>
+                            <a className='text-white' href='google.ie'><BsYoutube className='fs-4' /></a>
                         </div>
                     </div>
                     <div className='col-3'>

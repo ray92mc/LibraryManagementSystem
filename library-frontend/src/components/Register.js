@@ -109,14 +109,14 @@ const Register = () => {
     return (
         <>
         {success ? (
-            <section>
+            <section className="success-page">
                 <h1>Success!</h1>
                 <p>
-                    <a href="/login">Sing In</a>
+                    <a href="/login">Sign In</a>
                 </p>
             </section>
         ) : (
-        <section>
+        <section className="register-form">
             <p ref={errRef} className={errMsg ? "errmsg" : 
             "offscreen"} aria-live="assertive">{errMsg}</p>
             <h1>Register</h1>
@@ -144,10 +144,10 @@ const Register = () => {
                     onBlur={() => setFirstnameFocus(false)}
                 />
                 <p id="firstname-note" className={firstnameFocus && firstname && !validFirstname ? "instructions" : "offscreen"}>
-                    <FontAwesomeIcon icon={faInfoCircle} />
+                    <FontAwesomeIcon icon={faInfoCircle} />{" "}
                     3 to 24 characters.<br />
                     Must begin with a letter.<br />
-                    Letters, numbers, underscores, hyphens allowed.
+                    Letters, numbers, underscores,<br /> hyphens allowed.
                 </p>
 
                 <label htmlFor="lastname">
@@ -171,10 +171,10 @@ const Register = () => {
                     onBlur={() => setLastnameFocus(false)}
                 />
                 <p id="lastname-note" className={lastnameFocus && lastname && !validLastname ? "instructions" : "offscreen"}>
-                    <FontAwesomeIcon icon={faInfoCircle} />
+                    <FontAwesomeIcon icon={faInfoCircle} /> {" "}
                     3 to 24 characters.<br />
                     Must begin with a letter.<br />
-                    Letters, numbers, underscores, hyphens allowed.
+                    Letters, numbers, underscores,<br /> hyphens allowed.
                 </p>
 
                 <label htmlFor="email">
@@ -198,7 +198,7 @@ const Register = () => {
                     onBlur={() => setEmailFocus(false)}
                 />
                 <p id="email-note" className={emailFocus && email && !validEmail ? "instructions" : "offscreen"}>
-                    <FontAwesomeIcon icon={faInfoCircle} />
+                    <FontAwesomeIcon icon={faInfoCircle} /> {" "}
                     Enter a valid email address.
                 </p>
 
@@ -219,9 +219,9 @@ const Register = () => {
                     onBlur={() => setPwdFocus(false)}
                 />
                 <p id="pwdnote" className={pwdFocus && !validPwd ? "instructions" : "offscreen"}>
-                    <FontAwesomeIcon icon={faInfoCircle} />
+                    <FontAwesomeIcon icon={faInfoCircle} /> {" "}
                     8 to 24 characters.<br />
-                    Must include uppercase and lowercase letters, a number and a special character.<br />
+                    Must include uppercase and lowercase<br/> letters, a number and a special character.<br />
                     Allowed special characters: <span aria-label="exclamation mark">!</span> <span aria-label="at symbol">@</span> <span aria-label="hashtag">#</span> <span aria-label="dollar sign">$</span> <span aria-label="percent">%</span>
                 </p>
 
@@ -242,7 +242,7 @@ const Register = () => {
                     onBlur={() => setMatchFocus(false)}
                 />
                 <p id="confirmnote" className={matchFocus && !validMatch ? "instructions" : "offscreen"}>
-                    <FontAwesomeIcon icon={faInfoCircle} />
+                    <FontAwesomeIcon icon={faInfoCircle} /> {" "}
                     Must match the first password input field.
                 </p>
 

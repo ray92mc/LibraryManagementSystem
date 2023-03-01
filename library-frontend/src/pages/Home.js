@@ -10,26 +10,37 @@ const Home = () => {
         // if used in more components, this should be in context 
         // axios to /logout endpoint 
         setAuth({});
-        navigate('/linkpage');
+        navigate('/');
+        localStorage.removeItem('token');
     }
 
     return (
-        <section>
-            <h1>Home</h1>
-            <br />
-            <p>You are logged in!</p>
-            <br />
-            <Link to="/books">Go to the Books page</Link>
-            <br />
-            <Link to="/users">Go to the Users page</Link>
-            <br />
-            <Link to="/admin">Go to the Admin page</Link>
-            <br />
-            <Link to="/linkpage">Go to the Link Page</Link>
-            <div className="flexGrow">
-                <button onClick={logout}>Sign Out</button>
+        <>
+        <section className="home-wrapper-1 py-5">
+            <div className="container-xxl">
+                <div className="row">
+                    <div className="col-6">
+                        <div className="row">
+                            <h4>Online Library Management</h4>
+                            <h5>Join today, it's free!</h5>
+                            <Link to={"register"}>Sign Up</Link>
+                        </div>
+                        <div className="row">
+                        <img src="images/libraryBanner1.svg" className="img-fluid p-1" alt="main banner" />
+                        </div>
+                    </div>
+                    <div className="col-6">
+                        <div className="main-banner p-3">
+                            <img src="images/dal2.png" className="img-fluid rounded-3" alt="main banner" />
+                        </div>
+                    </div>
+                </div>
             </div>
         </section>
+        <div className="flexGrow">
+            <button className="m-5" onClick={logout}>Sign Out</button>
+        </div>
+        </>
     );
 }
 

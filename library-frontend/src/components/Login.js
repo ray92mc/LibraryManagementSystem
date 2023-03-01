@@ -50,6 +50,7 @@ const Login = () => {
             setEmail('');
             setPwd('');
             navigate(from, { replace: true });
+            localStorage.setItem('token', token);
         
         } catch (err) {
             if (!err?.response) {
@@ -68,7 +69,7 @@ const Login = () => {
 
     return(
 
-        <section>
+        <section className="auth-form">
             <p ref={errRef} className={errMsg ? "errmsg" : "offscreen"} aria-live="assertive">{errMsg}</p>
             <h1>Sign In</h1>
             <form onSubmit={handleSubmit}>

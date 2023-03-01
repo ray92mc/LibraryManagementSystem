@@ -21,7 +21,7 @@ public class ReservationController {
         this.reservationService = reservationService;
     }
 
-    @PostMapping("/reserve")
+    @PostMapping
     public ResponseEntity<Reservation> reserveBook(@RequestParam Long bookId, @RequestParam Long userId) {
         Reservation reservation = reservationService.reserveBook(bookId, userId);
         return ResponseEntity.ok(reservation);

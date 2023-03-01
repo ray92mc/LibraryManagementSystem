@@ -39,6 +39,11 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
+    public List<Book> search(String query) {
+        return null;
+    }
+
+    @Override
     public List<Book> findAll() {
         return bookRepository.findAll();
     }
@@ -48,8 +53,5 @@ public class BookServiceImpl implements BookService {
         return bookRepository.findById(id);
     }
 
-    @Override
-    public List<Book> search(String query) {
-        return bookRepository.findByTitleContainingOrAuthorContainingOrGenreContaining(query);
-    }
+
 }
