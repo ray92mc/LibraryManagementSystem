@@ -65,6 +65,9 @@ public class BookServiceImpl implements BookService {
 
     @Override
     public Book rateBook(Long id, double rating){
+        if(rating<0.1 || rating>5.0){
+            throw new RuntimeException("Array out of bounds: 0.1 - 5");
+        }
         Book existingBook = bookRepository.findById(id).orElseThrow(() -> new RuntimeException("Book not found"));
 
         double newRatingTotal = existingBook.getRatingTotal() + rating;
