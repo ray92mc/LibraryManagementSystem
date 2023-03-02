@@ -40,7 +40,7 @@ public class ReservationServiceImpl implements ReservationService {
                 .book(book.get())
                 .user(user.get())
                 .reservedAt(LocalDateTime.now())
-                .dueDate(LocalDateTime.now().plusDays(14))
+                .pickUpBy(LocalDateTime.now().plusDays(7))
                 .build();
         book.get().setQuantityAvailable(book.get().getQuantityAvailable()-1);
         reservationRepository.save(reservation);
@@ -67,6 +67,8 @@ public class ReservationServiceImpl implements ReservationService {
             throw new ResourceNotFoundException("Reservation not found");
         }
         reservation.setCheckedOutAt(LocalDateTime.now());
+        reservation.setDueDate(LocalDateTime.now().plusDays(14));
+        reservation.setReturned(false);
         return reservationRepository.save(reservation);
     }
 
@@ -88,5 +90,20 @@ public class ReservationServiceImpl implements ReservationService {
     @Override
     public Reservation findReservationById(Long id) {
         return reservationRepository.findById(id).orElse(null);
+    }
+
+    @Override
+    public Reservation extendDueDate(Long reservationId, int daysToExtend) {
+        Reservation reservation = findReservationById(reservationId);
+        if (reservation == null) {
+            throw new ResourceNotFoundException("Reservation not found");
+        }
+        reservation.setDueDate(reservation.getDueDate().plusDays(daysToExtend));
+        return reservationRepository.save(reservation);
+    }
+
+    @Override
+    public List<Reservation> checkForOverdueReservations(){
+        return reservationRepository.findOverdueReservations(LocalDateTime.now());
     }
 }
