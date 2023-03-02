@@ -60,4 +60,20 @@ public class ReservationController {
             return ResponseEntity.notFound().build();
         }
     }
+
+    @PutMapping("/{id}/extend")
+    public ResponseEntity<Reservation> extendDueDate(@PathVariable Long id, @RequestParam int daysToExtend) {
+        try {
+            Reservation reservation = reservationServiceImpl.extendDueDate(id, daysToExtend);
+            return ResponseEntity.ok(reservation);
+        } catch (ResourceNotFoundException ex) {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+    @GetMapping("/overdue")
+    public ResponseEntity<List<Reservation>> checkForOverdueReservations() {
+        List<Reservation> overdueReservations = reservationServiceImpl.checkForOverdueReservations();
+        return ResponseEntity.ok(overdueReservations);
+    }
 }
