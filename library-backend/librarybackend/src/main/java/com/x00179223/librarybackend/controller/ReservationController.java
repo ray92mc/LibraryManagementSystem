@@ -1,6 +1,7 @@
 package com.x00179223.librarybackend.controller;
 
 import com.x00179223.librarybackend.exceptions.ResourceNotFoundException;
+import com.x00179223.librarybackend.model.BookUserIdRequest;
 import com.x00179223.librarybackend.model.Reservation;
 import com.x00179223.librarybackend.service.ReservationServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,8 +23,8 @@ public class ReservationController {
     }
 
     @PostMapping
-    public ResponseEntity<Reservation> reserveBook(@RequestParam Long bookId, @RequestParam Long userId) {
-        Reservation reservation = reservationServiceImpl.reserveBook(bookId, userId);
+    public ResponseEntity<Reservation> reserveBook(@RequestBody BookUserIdRequest request) {
+        Reservation reservation = reservationServiceImpl.reserveBook(request.getBookId(), request.getUserId());
         return ResponseEntity.ok(reservation);
     }
 
@@ -62,7 +63,7 @@ public class ReservationController {
     }
 
     @PutMapping("/{id}/extend")
-    public ResponseEntity<Reservation> extendDueDate(@PathVariable Long id, @RequestParam int daysToExtend) {
+    public ResponseEntity<Reservation> extendDueDate(@PathVariable Long id, @RequestBody int daysToExtend) {
         try {
             Reservation reservation = reservationServiceImpl.extendDueDate(id, daysToExtend);
             return ResponseEntity.ok(reservation);
