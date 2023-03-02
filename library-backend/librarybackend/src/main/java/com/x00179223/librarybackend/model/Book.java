@@ -25,7 +25,5 @@ public class Book {
     private String ISBN;
     private String genre;
     private int publicationYear;
-    private int quantity;
-    private int available;
-    private boolean reserved;
+    private int quantityAvailable;
 }

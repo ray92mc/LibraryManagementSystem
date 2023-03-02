@@ -26,6 +26,7 @@ public class Reservation {
     @JoinColumn(name = "user_id")
     private User user;
     private LocalDateTime reservedAt;
+    private LocalDateTime pickUpBy;
     private LocalDateTime checkedOutAt;
     private LocalDateTime dueDate;
     private boolean returned;

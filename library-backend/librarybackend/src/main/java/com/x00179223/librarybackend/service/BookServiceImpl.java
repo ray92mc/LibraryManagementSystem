@@ -1,5 +1,8 @@
 package com.x00179223.librarybackend.service;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.x00179223.librarybackend.model.Book;
 import com.x00179223.librarybackend.repository.BookRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,14 +36,20 @@ public class BookServiceImpl implements BookService {
         existingBook.setTitle(book.getTitle());
         existingBook.setAuthor(book.getAuthor());
         existingBook.setGenre(book.getGenre());
-        existingBook.setAvailable(book.getAvailable());
+        existingBook.setQuantityAvailable(book.getQuantityAvailable());
         existingBook.setPublicationYear(book.getPublicationYear());
         return bookRepository.save(existingBook);
     }
 
     @Override
-    public List<Book> search(String query) {
-        return null;
+    public List<Book> searchByTitleOrAuthorOrGenre(String query) throws JsonProcessingException {
+        ObjectMapper objectMapper = new ObjectMapper();
+        JsonNode jsonNode = objectMapper.readTree(query); // parse the JSON string
+        String searchQuery = jsonNode.get("query").asText();
+        List<Book> books = bookRepository.searchByTitleOrAuthorOrGenre(searchQuery);
+        System.out.println(searchQuery);
+        System.out.println(books);
+        return books;
     }
 
     @Override

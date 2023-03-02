@@ -1,5 +1,6 @@
 package com.x00179223.librarybackend.controller;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.x00179223.librarybackend.model.Book;
 import com.x00179223.librarybackend.service.BookService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,7 +47,7 @@ public class BookController {
     }
 
     @GetMapping("/search")
-    public List<Book> searchBooks(@RequestParam String query) {
-        return bookService.search(query);
+    public List<Book> searchBooks(@RequestBody String query) throws JsonProcessingException {
+        return bookService.searchByTitleOrAuthorOrGenre(query.toLowerCase());
     }
 }

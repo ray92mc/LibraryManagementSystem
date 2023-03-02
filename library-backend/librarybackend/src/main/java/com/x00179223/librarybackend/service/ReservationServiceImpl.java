@@ -33,7 +33,7 @@ public class ReservationServiceImpl implements ReservationService {
         if (book == null || user == null) {
             throw new ResourceNotFoundException("Book or User not found");
         }
-        if (book.get().getAvailable() <= 0) {
+        if (book.get().getQuantityAvailable() <= 0) {
             throw new IllegalArgumentException("Book is not available for reservation");
         }
         Reservation reservation = Reservation.builder()
@@ -42,7 +42,7 @@ public class ReservationServiceImpl implements ReservationService {
                 .reservedAt(LocalDateTime.now())
                 .dueDate(LocalDateTime.now().plusDays(14))
                 .build();
-        book.get().setAvailable(book.get().getAvailable()-1);
+        book.get().setQuantityAvailable(book.get().getQuantityAvailable()-1);
         reservationRepository.save(reservation);
         bookService.save(book.get());
         return reservation;
@@ -54,7 +54,7 @@ public class ReservationServiceImpl implements ReservationService {
         if (reservation == null) {
             throw new ResourceNotFoundException("Reservation not found");
         }
-        reservation.getBook().setAvailable(reservation.getBook().getAvailable()+1);
+        reservation.getBook().setQuantityAvailable(reservation.getBook().getQuantityAvailable()+1);
         reservationRepository.delete(reservation);
         bookService.save(reservation.getBook());
         return reservation;
