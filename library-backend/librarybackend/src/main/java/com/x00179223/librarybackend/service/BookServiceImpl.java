@@ -38,6 +38,7 @@ public class BookServiceImpl implements BookService {
         existingBook.setGenre(book.getGenre());
         existingBook.setQuantityAvailable(book.getQuantityAvailable());
         existingBook.setPublicationYear(book.getPublicationYear());
+        existingBook.setRating(book.getRating());
         return bookRepository.save(existingBook);
     }
 
@@ -60,6 +61,20 @@ public class BookServiceImpl implements BookService {
     @Override
     public Optional<Book> findById(Long id) {
         return bookRepository.findById(id);
+    }
+
+    @Override
+    public Book rateBook(Long id, double rating){
+        Book existingBook = bookRepository.findById(id).orElseThrow(() -> new RuntimeException("Book not found"));
+
+        double newRatingTotal = existingBook.getRatingTotal() + rating;
+        int newRatingCount = existingBook.getRatingCount() + 1;
+        double newRating = newRatingTotal / newRatingCount;
+
+        existingBook.setRating(newRating);
+        existingBook.setRatingCount(newRatingCount);
+        existingBook.setRatingTotal(newRatingTotal);
+        return bookRepository.save(existingBook);
     }
 
 

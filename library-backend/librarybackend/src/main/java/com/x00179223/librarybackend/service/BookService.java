@@ -10,7 +10,8 @@ public interface BookService {
     Optional<Book> findById(Long id);
     List<Book> findAll();
     Book save(Book book);
-    void delete(Long book);
+    void delete(Long id);
     Book update(Long id, Book book);
     List<Book> searchByTitleOrAuthorOrGenre(String query) throws JsonProcessingException;
+    Book rateBook(Long id, double rating);
 }

@@ -9,6 +9,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Data
 @Builder
 @NoArgsConstructor
@@ -26,4 +28,7 @@ public class Book {
     private String genre;
     private int publicationYear;
     private int quantityAvailable;
+    private double rating;
+    private int ratingCount;
+    private double ratingTotal;
 }
