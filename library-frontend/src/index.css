@@ -83,17 +83,23 @@ a {
 /*Header end*/
 
 /*Footer start*/
-footer{
+footer {
     background-color: var(--color-232f3e);
-}
-footer:not(:first-child){
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+  }
+  
+  footer:not(:first-child) {
     border-top: 1px solid rgba(255, 255, 255, 0.1);
-}
-footer .input-group-text{
+  }
+  
+  footer .input-group-text {
     background-color: var(--color-232f3e);
     color: white;
     padding: 8px 17px;
-}
+  }
 /*Footer end*/
 
 /* Homepage starts */
@@ -112,30 +118,31 @@ th, td {
 padding: 0.75rem;
 vertical-align: middle;
 text-align: left;
-border-top: 1px solid #dee2e6;
+border-top: 1px solid var(--color-3b4149);
 }
 
 thead th {
 vertical-align: bottom;
-border-bottom: 2px solid #dee2e6;
+border-bottom: 2px solid var(--color-3b4149);
 }
 
 tbody + tbody {
-border-top: 2px solid #dee2e6;
+border-top: 2px solid var(--color-3b4149);
 }
 
 button {
-padding: 0.5rem;
-margin-right: 0.5rem;
-border: none;
-border-radius: 0.25rem;
-background-color: #007bff;
-color: #fff;
-cursor: pointer;
+    padding: 0.5rem;
+    margin-right: 0.5rem;
+    border: none;
+    border-radius: 0.25rem;
+    background-color: var(--color-febd69);
+    color: black;
+    cursor: pointer;
 }
 
 button:hover {
-background-color: #0069d9;
+    background-color: var(--color-febd69);
+    outline: 2px solid black;
 }
 
 /* Table end */
@@ -368,3 +375,30 @@ text-decoration: none;
 .success-page a:hover {
 text-decoration: underline;
 }
+/*Admin Page start*/
+.admin-page {
+    background-color: var(--color-232f3e);
+    padding: 20px;
+    margin-top: 20px;
+  }
+  
+  .admin-page .list-group-item {
+    background-color: var(--color-131921);
+    color: white;
+    border: none;
+  }
+  
+  .admin-page .list-group-item:hover {
+    background-color: var(--color-3b4149);
+  }
+  
+  .admin-page .list-group-item:focus {
+    background-color: var(--color-3b4149);
+  }
+  
+  .admin-page .list-group-item.active {
+    background-color: var(--color-febd69);
+    color: var(--color-232f3e);
+    font-weight: 600;
+  }
+/*Admin page end*/  

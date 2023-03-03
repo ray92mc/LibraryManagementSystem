@@ -66,7 +66,7 @@ const updateUser = (id, updatedUser) => {
 };
 
 return (
-  <div className="container-xxl mt-2">
+  <div className="container mt-2">
     {loading ? (
     <p>Loading...</p>
     ) : (

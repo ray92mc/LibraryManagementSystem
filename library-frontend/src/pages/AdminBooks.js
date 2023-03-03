@@ -33,7 +33,21 @@ const Books = () => {
       });
   };
   
-  const reserveBook = (id, updatedBook) => {
+  const deleteBook = (id) => {
+    setLoading(true);
+    axios
+      .delete(`/books/${id}`)
+      .then(() => {
+        setBooks(books.filter((book) => book.id !== id));
+        setLoading(false);
+      })
+      .catch((err) => {
+        console.error(err);
+        setLoading(false);
+      });
+  };
+  
+  const updateBook = (id, updatedBook) => {
     setLoading(true);
     axios
       .put(`/books/${id}`, {
@@ -74,7 +88,8 @@ const Books = () => {
             <td>{book.genre}</td>
             <td>5</td>
             <td>
-              <button onClick={() => reserveBook(book.id)}>Reserve</button>
+              <button onClick={() => updateBook(book.id)}>Edit</button>
+              <button onClick={() => deleteBook(book.id)}>Delete</button>
             </td>
           </tr>
           ))}
