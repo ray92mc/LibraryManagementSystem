@@ -1,6 +1,7 @@
 import { React, useState, useEffect } from "react";
 import axios from "../api/axios";
 import { Link } from "react-router-dom";
+import { BsSearch } from "react-icons/bs";
 
 const Books = () => {
 
@@ -59,9 +60,22 @@ const Books = () => {
       {loading ? (
       <p>Loading...</p>
       ) : (
+      <>
+      <div className="container py-5 input-group">
+        <input type="text" 
+        className="form-control py-2" 
+        placeholder="Search books by title, author or category..." 
+        aria-label="Search reservations by title, author or category" 
+        aria-describedby="basic-addon2"
+        />
+        <span className="input-group-text p-3" id="basic-addon2">
+            <BsSearch className='fs-5'/>
+        </span>
+      </div>
       <table>
         <thead>
           <tr>
+            <th>ID</th>
             <th>Title</th>
             <th>Author</th>
             <th>Category</th>
@@ -72,6 +86,7 @@ const Books = () => {
         <tbody>
           {books.map((book) => (
           <tr key={book.id}>
+            <td>{book.id}</td>
             <td>{book.title}</td>
             <td>{book.author}</td>
             <td>{book.genre}</td>
@@ -83,6 +98,7 @@ const Books = () => {
           ))}
         </tbody>
       </table>
+      </>
       )
       }
       <button className="mb-5" onClick={() => addBook({})}>Add Book</button>

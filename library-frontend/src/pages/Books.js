@@ -65,7 +65,7 @@ const Books = () => {
               disabled={book.quantityAvailable < 1}
               className={book.quantityAvailable < 1 ? "btn btn-secondary" : "button"}
             >
-              Reserve
+              {book.quantityAvailable<1 ? "Out of Stock": "Reserve"}
             </button>
             </td>
           </tr>

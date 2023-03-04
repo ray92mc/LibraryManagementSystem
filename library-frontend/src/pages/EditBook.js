@@ -72,6 +72,24 @@ const EditBook = () => {
       });
   };
 
+  // const updateBook = (id, updatedBook) => {
+  //   setLoading(true);
+  //   axios
+  //     .put(`/books/${id}`, {
+  //       ...updatedBook,
+  //     })
+  //     .then((res) => {
+  //       setBooks(
+  //         books.map((book) => (book.id === id ? res.data : book))
+  //       );
+  //       setLoading(false);
+  //     })
+  //     .catch((err) => {
+  //       console.error(err);
+  //       setLoading(false);
+  //     });
+  // }
+
   return (
     <>
     <div className='container-xxl'>

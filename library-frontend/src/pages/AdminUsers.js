@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import axios from "../api/axios";
+import { BsSearch } from "react-icons/bs";
 
 function UserTable() {
   const [users, setUsers] = useState([]);
@@ -70,9 +71,22 @@ return (
     {loading ? (
     <p>Loading...</p>
     ) : (
+    <>
+    <div className="container py-5 input-group">
+        <input type="text" 
+        className="form-control py-2" 
+        placeholder="Search users by ID..." 
+        aria-label="Search reservations by title, author or category" 
+        aria-describedby="basic-addon2"
+        />
+        <span className="input-group-text p-3" id="basic-addon2">
+            <BsSearch className='fs-5'/>
+        </span>
+      </div>
     <table>
       <thead>
         <tr>
+          <th>ID</th>
           <th>Firstname</th>
           <th>Lastname</th>
           <th>Email</th>
@@ -83,6 +97,7 @@ return (
       <tbody>
         {users.map((user) => (
         <tr key={user.id}>
+          <td>{user.id}</td>
           <td>{user.firstname}</td>
           <td>{user.lastname}</td>
           <td>{user.email}</td>
@@ -94,6 +109,7 @@ return (
         ))}
       </tbody>
     </table>
+    </>
     )
     }
     <button className="mb-5" onClick={() => addUser({})}>Add User</button>

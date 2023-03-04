@@ -1,6 +1,7 @@
 import { React, useState, useEffect } from "react";
 import axios from "../api/axios";
 import { Link } from "react-router-dom";
+import { BsSearch } from "react-icons/bs";
 
 const AdminReservations = () => {
 
@@ -60,9 +61,23 @@ return (
     {loading ? (
     <p>Loading...</p>
     ) : (
+    <>
+    <div className="container py-5 input-group">
+        <input type="text" 
+        className="form-control py-2" 
+        placeholder="Search reservations by ID..." 
+        aria-label="Search reservations by ID" 
+        aria-describedby="basic-addon2"
+        />
+        <span className="input-group-text p-3" id="basic-addon2">
+            <BsSearch className='fs-5'/>
+        </span>
+    </div>
+    <div>
     <table>
     <thead>
         <tr>
+        <th>ID</th>
         <th>Email</th>
         <th>Reserved At</th>
         <th>Pick Up By</th>
@@ -75,6 +90,7 @@ return (
     <tbody>
         {reservations.map((reservation) => (
         <tr key={reservation.id}>
+        <td>{reservation.id}</td>
         <td>{reservation.user.email}</td>
         <td>{formatDate(reservation.reservedAt)}</td>
         <td>{formatDate(reservation.pickUpBy)}</td>
@@ -88,10 +104,12 @@ return (
         ))}
     </tbody>
     </table>
+    </div>
+    </>
     )
     }
     <button className="mb-5" onClick={() => addReservation({})}>Add Reservation</button>
-</div>
+    </div>
 );
 }
 
