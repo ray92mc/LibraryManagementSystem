@@ -63,9 +63,9 @@ public class ReservationController {
     }
 
     @PutMapping("/{id}/extend")
-    public ResponseEntity<Reservation> extendDueDate(@PathVariable Long id, @RequestBody int daysToExtend) {
+    public ResponseEntity<Reservation> extendDueDate(@PathVariable Long id) {
         try {
-            Reservation reservation = reservationService.extendDueDate(id, daysToExtend);
+            Reservation reservation = reservationService.extendDueDate(id);
             return ResponseEntity.ok(reservation);
         } catch (ResourceNotFoundException ex) {
             return ResponseEntity.notFound().build();

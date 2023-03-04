@@ -137,7 +137,7 @@ const EditBook = () => {
   <Row>
     <Col className='mb-5'>
     <Link to="/admin-books">
-    <button>Back to Book Details</button>
+    <button>Back to Books</button>
     </Link>
     </Col>
     <Col>

@@ -10,6 +10,6 @@ public interface ReservationService {
     Reservation cancelReservation(Long reservationId);
     List<Reservation> findAllReservations();
     Reservation findReservationById(Long id);
-    Reservation extendDueDate(Long reservationId, int daysToExtend);
+    Reservation extendDueDate(Long reservationId);
     List<Reservation> checkForOverdueReservations();
 }

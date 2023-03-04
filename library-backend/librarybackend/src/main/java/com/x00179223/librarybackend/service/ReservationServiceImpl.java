@@ -93,12 +93,12 @@ public class ReservationServiceImpl implements ReservationService {
     }
 
     @Override
-    public Reservation extendDueDate(Long reservationId, int daysToExtend) {
+    public Reservation extendDueDate(Long reservationId) {
         Reservation reservation = findReservationById(reservationId);
         if (reservation == null) {
             throw new ResourceNotFoundException("Reservation not found");
         }
-        reservation.setDueDate(reservation.getDueDate().plusDays(daysToExtend));
+        reservation.setDueDate(reservation.getDueDate().plusDays(7));
         return reservationRepository.save(reservation);
     }
 

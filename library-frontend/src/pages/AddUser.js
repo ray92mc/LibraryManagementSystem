@@ -1,6 +1,15 @@
 import React from 'react'
+import { useState } from 'react';
 
 const AddUser = () => {
+
+    const [user, setUser] = useState();
+    const [firstname, setFirstname] = useState();
+    const [lastname, setLastname] = useState();
+    const [email, setEmail] = useState();
+    const [password, setPassword] = useState();
+
+
   return (
     <div>AddUser</div>
   )

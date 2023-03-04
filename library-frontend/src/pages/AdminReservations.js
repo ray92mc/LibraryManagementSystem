@@ -92,7 +92,7 @@ return (
         <td>{reservation.user.email}</td>
         <td>{formatDate(reservation.reservedAt)}</td>
         <td>{formatDate(reservation.pickUpBy)}</td>
-        <td>{formatDate(reservation.checkOutAt)}</td>
+        <td>{formatDate(reservation.checkedOutAt)}</td>
         <td>{formatDate(reservation.dueDate)}</td>
         <td>{reservation.returned ? "Yes" : "No"}</td>           
         <td>

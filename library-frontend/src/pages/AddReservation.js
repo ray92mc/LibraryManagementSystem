@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import axios from '../api/axios';
 import { Card, Col, Row, Form } from "react-bootstrap";
+import { Link } from 'react-router-dom';
 
 const AddReservation = () => {
 
@@ -85,6 +86,9 @@ const AddReservation = () => {
                 <button>Checkout</button>
             </Card.Body>
           </Card>
+          <Link to="/admin-reservations">
+          <button>Back to Reservations</button>
+          </Link>
            </section>
         ) : (
       <div className='container-xxl'> 
@@ -108,6 +112,12 @@ const AddReservation = () => {
           </Card>
         </Col>
       </Row>
+      <Link to="/admin-reservations">
+          <button className='mb-5'>Back to Reservations</button>
+      </Link>
+      <Link to="/admin-books">
+          <button className='mb-5'>Back to Books</button>
+      </Link>
       </div>
      </div>
       )

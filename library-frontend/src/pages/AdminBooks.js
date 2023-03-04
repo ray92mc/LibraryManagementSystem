@@ -82,7 +82,7 @@ const Books = () => {
       </>
       )
       }
-      <button className="mb-5" onClick={() => addBook({})}>Add Book</button>
+      <button className="mb-5" onClick={() => alert({})}>Add Book</button>
     </div>
     );
   }

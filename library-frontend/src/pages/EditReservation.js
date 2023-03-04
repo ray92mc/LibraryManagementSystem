@@ -1,13 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import axios from '../api/axios';
 import { Card, Col, Row } from "react-bootstrap";
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams, Link } from 'react-router-dom';
+
 
 const EditReservation = () => {
 
     const [reservation, setReservation] = useState({});
     const [loading, setLoading] = useState(false);
     const { id } = useParams();
+    const navigate = useNavigate();
     
     useEffect(() => {
         setLoading(true);
@@ -46,10 +48,50 @@ const EditReservation = () => {
         return <p>Loading...</p>;
     }
 
+    const extendReservation = async () => {
+      try{
+        const response = await axios.put(`/reservations/${id}/extend`);
+        setReservation(response.data);
+        alert("Reservation due date extended by 7 days")
+      }catch (err) {
+        console.log(err);
+      }
+    }
+
+    const cancelReservation = async () => {
+      try {
+        await axios.delete(`/reservations/cancel/${id}`);
+        alert("Reservation cancelled")
+        navigate("/admin-reservations");
+      } catch (err) {
+        console.log(err);
+      }
+    };
+
+    const checkinReservation = async () => {
+      try{
+        const response = await axios.put(`/reservations/checkin/${id}`);
+        setReservation(response.data);
+        alert("Reservation checked in")
+      }catch (err) {
+        console.log(err);
+      }
+    }
+
+    const checkoutReservation = async () => {
+      try{
+        const response = await axios.put(`/reservations/checkout/${id}`);
+        setReservation(response.data);
+        alert("Reservation checked out")
+      }catch (err) {
+        console.log(err);
+      }
+    }
+
   return (
     <>
     <div className='container-xxl'>
-      <h2 className='m-5'>Reservation #{reservation.id}</h2>
+      <h2 className='m-5'>Reservation #{reservation?.id}</h2>
       <Row className="align-items-stretch">
         <Col className='mb-5'>
           <Card>
@@ -74,6 +116,7 @@ const EditReservation = () => {
             <Card.Body>
               <Card.Title>User Details</Card.Title>
               <Card.Text>
+                <div>
                 <p>First Name: {reservation?.user?.firstname}</p>
                 <p>Last Name: {reservation?.user?.lastname}</p>
                 <p>Email: {reservation?.user?.email}</p>
@@ -83,6 +126,7 @@ const EditReservation = () => {
                 <p>Account Non-Expired: {reservation?.user?.accountNonExpired ? 'Yes' : 'No'}</p>
                 <p>Credentials Non-Expired: {reservation?.user?.credentialsNonExpired ? 'Yes' : 'No'}</p>
                 <p>Account Non-Locked: {reservation?.user?.accountNonLocked ? 'Yes' : 'No'}</p>
+                </div>
               </Card.Text>
             </Card.Body>
           </Card>
@@ -100,23 +144,19 @@ const EditReservation = () => {
                 <p>Pick Up By: {formatDate(reservation?.pickUpBy)}</p>
                 <p>Checked Out At: {reservation?.checkedOutAt ? formatDate(reservation?.checkedOutAt) : 'N/A'}</p>
                 <p>Due Date: {formatDate(reservation?.dueDate)}</p>
-                <p>Returned: {reservation.checkedOutAt? (reservation?.returned ? 'Yes' : 'No') : 'N/A'}</p>
+                <p>Returned: {reservation?.checkedOutAt? (reservation?.returned ? 'Yes' : 'No') : 'N/A'}</p>
               </Card.Text>
-              
-                <button>Extend</button>
-                <button>Cancel</button>
-                <button>Checkin</button>
-                <button>Checkout</button>
-              
+                <button onClick={() => extendReservation()}>Extend</button>
+                <button onClick={() => cancelReservation()}>Cancel</button>
+                <button onClick={() => checkinReservation()}>Checkin</button>
+                <button onClick={() => checkoutReservation()}>Checkout</button>
             </Card.Body>
           </Card>
         </Col>
       </Row>
-    </div>
-    <div className="btn-container">
-    <Row>
-        
-      </Row>
+      <Link to="/admin-reservations">
+          <button className='mb-5'>Back to Reservations</button>
+      </Link>
     </div>
     </>
   );
