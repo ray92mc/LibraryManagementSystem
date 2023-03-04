@@ -34,26 +34,6 @@ const Books = () => {
         setLoading(false);
       });
   };
-  
-  
-  
-  const updateBook = (id, updatedBook) => {
-    setLoading(true);
-    axios
-      .put(`/books/${id}`, {
-        ...updatedBook,
-      })
-      .then((res) => {
-        setBooks(
-          books.map((book) => (book.id === id ? res.data : book))
-        );
-        setLoading(false);
-      })
-      .catch((err) => {
-        console.error(err);
-        setLoading(false);
-      });
-  };
 
   return (
     <div className="container-xxl mt-2">
@@ -92,6 +72,7 @@ const Books = () => {
             <td>{book.genre}</td>
             <td>{book.rating}/5</td>
             <td>
+            <Link to={`/reserve-book/${book.id}`}><button>Reserve</button></Link>
             <Link to={`/edit-book/${book.id}`}><button>Manage</button></Link>
             </td>
           </tr>

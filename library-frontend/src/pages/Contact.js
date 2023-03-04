@@ -10,6 +10,7 @@ const Contact = () => {
             <h2>Address</h2>
             <p>TU Dublin</p>
             <p>Tallaght</p>
+            <p>Dublin</p>
             <p>Ireland</p>
           </div>
           <div className="col-lg-6">

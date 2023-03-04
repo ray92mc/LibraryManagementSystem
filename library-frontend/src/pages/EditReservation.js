@@ -32,9 +32,7 @@ const EditReservation = () => {
             month: '2-digit',
             day: '2-digit',
             hour: '2-digit',
-            minute: '2-digit',
-            second: '2-digit',
-            hour12: false
+            minute: '2-digit'
           });
     
           return formattedDate;
@@ -102,7 +100,7 @@ const EditReservation = () => {
                 <p>Pick Up By: {formatDate(reservation?.pickUpBy)}</p>
                 <p>Checked Out At: {reservation?.checkedOutAt ? formatDate(reservation?.checkedOutAt) : 'N/A'}</p>
                 <p>Due Date: {formatDate(reservation?.dueDate)}</p>
-                <p>Returned: {reservation.checkedOut? (reservation?.returned ? 'Yes' : 'No') : 'N/A'}</p>
+                <p>Returned: {reservation.checkedOutAt? (reservation?.returned ? 'Yes' : 'No') : 'N/A'}</p>
               </Card.Text>
               
                 <button>Extend</button>

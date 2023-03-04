@@ -19,23 +19,6 @@ const Books = () => {
     });
   }, []);
   
-  const reserveBook = (id, updatedBook) => {
-    setLoading(true);
-    axios
-      .put(`/books/${id}`, {
-        ...updatedBook,
-      })
-      .then((res) => {
-        setBooks(
-          books.map((book) => (book.id === id ? res.data : book))
-        );
-        setLoading(false);
-      })
-      .catch((err) => {
-        console.error(err);
-        setLoading(false);
-      });
-  };
 
   return (
     <div className="container-xxl mt-2">
@@ -61,7 +44,7 @@ const Books = () => {
             <td>{book.rating}/5</td>
             <td>
             <button
-              onClick={() => reserveBook(book.id)}
+              onClick={() => alert(book.id)}
               disabled={book.quantityAvailable < 1}
               className={book.quantityAvailable < 1 ? "btn btn-secondary" : "button"}
             >

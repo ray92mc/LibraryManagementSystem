@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from '../api/axios';
-import { Card, Col, Row, Form, Button } from "react-bootstrap";
+import { Card, Col, Row, Form } from "react-bootstrap";
 import { Link, useLocation, useParams } from 'react-router-dom';
 
 const EditBook = () => {
@@ -38,9 +38,9 @@ const EditBook = () => {
           });
       }, [id]);
 
-  if (loading) {
-    return <p>Loading...</p>;
-  }
+      if (loading) {
+        return <p>Loading...</p>;
+      }
 
   const handleSubmit = async (e) => {
     e.preventDefault();
