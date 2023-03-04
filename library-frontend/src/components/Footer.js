@@ -44,10 +44,10 @@ const Footer = () => {
                             </address>
                         </div>
                         <div className='social_icons d-flex align-items-center gap-30'>
-                            <a className='text-white' href='google.ie'><BsFacebook className='fs-4' /></a>
-                            <a className='text-white' href='google.ie'><BsInstagram className='fs-4' /></a>
-                            <a className='text-white' href='google.ie'><BsTwitter className='fs-4' /></a>
-                            <a className='text-white' href='google.ie'><BsYoutube className='fs-4' /></a>
+                            <a className='text-white' href='http://www.facebook.com'><BsFacebook className='fs-4' /></a>
+                            <a className='text-white' href='http://www.instagram.com'><BsInstagram className='fs-4' /></a>
+                            <a className='text-white' href='http://www.twitter.com'><BsTwitter className='fs-4' /></a>
+                            <a className='text-white' href='http://www.youtube.com'><BsYoutube className='fs-4' /></a>
                         </div>
                     </div>
                     <div className='col-3'>
@@ -62,9 +62,9 @@ const Footer = () => {
                     <div className='col-3'>
                         <h4 className='text-white mb-4'>Account</h4>
                         <div className='footer-links d-flex flex-column'>
-                            <Link className='text-white py-2 mb-1'>About Us</Link>
+                            <Link to="/about" className='text-white py-2 mb-1'>About Us</Link>
                             <Link className='text-white py-2 mb-1'>FAQ</Link>
-                            <Link className='text-white py-2 mb-1'>Contact</Link>
+                            <Link to="/contact" className='text-white py-2 mb-1'>Contact</Link>
                             <Link className='text-white py-2 mb-1'>Search</Link>
                         </div>
                     </div>

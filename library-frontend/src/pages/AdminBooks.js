@@ -1,5 +1,6 @@
 import { React, useState, useEffect } from "react";
 import axios from "../api/axios";
+import { Link } from "react-router-dom";
 
 const Books = () => {
 
@@ -33,19 +34,7 @@ const Books = () => {
       });
   };
   
-  const deleteBook = (id) => {
-    setLoading(true);
-    axios
-      .delete(`/books/${id}`)
-      .then(() => {
-        setBooks(books.filter((book) => book.id !== id));
-        setLoading(false);
-      })
-      .catch((err) => {
-        console.error(err);
-        setLoading(false);
-      });
-  };
+  
   
   const updateBook = (id, updatedBook) => {
     setLoading(true);
@@ -76,7 +65,7 @@ const Books = () => {
             <th>Title</th>
             <th>Author</th>
             <th>Category</th>
-            <th>Popularity</th>
+            <th>Rating</th>
             <th>Actions</th>
           </tr>
         </thead>
@@ -86,10 +75,9 @@ const Books = () => {
             <td>{book.title}</td>
             <td>{book.author}</td>
             <td>{book.genre}</td>
-            <td>5</td>
+            <td>{book.rating}/5</td>
             <td>
-              <button onClick={() => updateBook(book.id)}>Edit</button>
-              <button onClick={() => deleteBook(book.id)}>Delete</button>
+            <Link to={`/edit-book/${book.id}`}><button>Manage</button></Link>
             </td>
           </tr>
           ))}

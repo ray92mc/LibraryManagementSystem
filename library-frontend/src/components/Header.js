@@ -63,7 +63,7 @@ const Header = () => {
                                     <img src="images/cart.svg" alt="cart" />
                                     <div className='d-flex flex-column'>
                                         <span className='badge bg-white text-dark'>0</span>
-                                        <p className='mb-0'>$0</p>
+                                        <p className='mb-0'>€0</p>
                                     </div>
                                 </Link>
                             </div>

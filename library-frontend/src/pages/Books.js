@@ -18,20 +18,6 @@ const Books = () => {
       setLoading(false);
     });
   }, []);
-
-  const addBook = (book) => {
-    setLoading(true);
-    axios
-      .post("/books", { ...book })
-      .then((res) => {
-        setBooks([...books, res.data]);
-        setLoading(false);
-      })
-      .catch((err) => {
-        console.error(err);
-        setLoading(false);
-      });
-  };
   
   const reserveBook = (id, updatedBook) => {
     setLoading(true);
@@ -62,7 +48,7 @@ const Books = () => {
             <th>Title</th>
             <th>Author</th>
             <th>Category</th>
-            <th>Popularity</th>
+            <th>Rating</th>
             <th>Actions</th>
           </tr>
         </thead>
@@ -72,9 +58,15 @@ const Books = () => {
             <td>{book.title}</td>
             <td>{book.author}</td>
             <td>{book.genre}</td>
-            <td>5</td>
+            <td>{book.rating}/5</td>
             <td>
-              <button onClick={() => reserveBook(book.id)}>Reserve</button>
+            <button
+              onClick={() => reserveBook(book.id)}
+              disabled={book.quantityAvailable < 1}
+              className={book.quantityAvailable < 1 ? "btn btn-secondary" : "button"}
+            >
+              Reserve
+            </button>
             </td>
           </tr>
           ))}
@@ -82,7 +74,6 @@ const Books = () => {
       </table>
       )
       }
-      <button className="mb-5" onClick={() => addBook({})}>Add Book</button>
     </div>
     );
   }

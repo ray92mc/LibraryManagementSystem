@@ -16,30 +16,20 @@ const Home = () => {
 
     return (
         <>
-        <section className="home-wrapper-1 py-5">
-            <div className="container-xxl">
+        <section className="bgimage" id="home">
+            <div className="container-fluid">
                 <div className="row">
-                    <div className="col-6">
-                        <div className="row">
-                            <h4>Online Library Management</h4>
-                            <h5>Join today, it's free!</h5>
-                            <Link to={"register"}>Sign Up</Link>
-                        </div>
-                        <div className="row">
-                        <img src="images/libraryBanner1.svg" className="img-fluid p-1" alt="main banner" />
-                        </div>
-                    </div>
-                    <div className="col-6">
-                        <div className="main-banner p-3">
-                            <img src="images/dal2.png" className="img-fluid rounded-3" alt="main banner" />
-                        </div>
+                    <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 hero-text">
+                        <h2 className="hero_title">Online Library Management</h2>
+                        <p className="hero_desc">Join today, it's free!</p>
+                        <Link to={"register"} className="hero-link">Sign Up</Link>
                     </div>
                 </div>
             </div>
+            <div className="flexGrow">
+                <button className="m-5" onClick={logout}>Sign Out</button>
+            </div>
         </section>
-        <div className="flexGrow">
-            <button className="m-5" onClick={logout}>Sign Out</button>
-        </div>
         </>
     );
 }
