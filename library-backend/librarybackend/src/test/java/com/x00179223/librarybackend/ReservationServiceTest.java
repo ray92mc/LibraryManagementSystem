@@ -1,6 +1,5 @@
 package com.x00179223.librarybackend;
 
-import com.x00179223.librarybackend.controller.BookController;
 import com.x00179223.librarybackend.model.Book;
 import com.x00179223.librarybackend.model.Reservation;
 import com.x00179223.librarybackend.model.User;
@@ -11,9 +10,7 @@ import com.x00179223.librarybackend.service.ReservationServiceImpl;
 import com.x00179223.librarybackend.service.UserService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;

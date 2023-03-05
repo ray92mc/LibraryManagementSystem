@@ -5,9 +5,11 @@ import com.x00179223.librarybackend.model.BookUserIdRequest;
 import com.x00179223.librarybackend.model.Reservation;
 import com.x00179223.librarybackend.service.ReservationService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @RestController
@@ -72,9 +74,26 @@ public class ReservationController {
         }
     }
 
-    @GetMapping("/overdue")
-    public ResponseEntity<List<Reservation>> checkForOverdueReservations() {
+    @GetMapping("/overdue-checkins")
+    public ResponseEntity<List<Reservation>> findOverdueCheckins() {
         List<Reservation> overdueReservations = reservationService.findOverdueCheckins();
-        return ResponseEntity.ok(overdueReservations);
+        if (overdueReservations.isEmpty()) {
+            return ResponseEntity.noContent().build();
+        } else {
+            return ResponseEntity.ok(overdueReservations);
+        }
     }
+
+    @DeleteMapping("/purge-non-picked-up")
+    public ResponseEntity<String> purgeNonPickedUpReservations() {
+        try {
+            reservationService.purgeNonPickedUpReservations();
+            return new ResponseEntity<>("Successfully purged non-picked up reservations", HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>("Error purging non-picked up reservations: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+
+
 }
