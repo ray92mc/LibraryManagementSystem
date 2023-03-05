@@ -77,7 +77,12 @@ const Books = () => {
             <td>{book?.rating}/5</td>
             <td>{book?.quantityAvailable}</td>
             <td>
-            <Link to={`/reserve-book/${book?.id}`}><button>Reserve</button></Link>
+            <button
+              disabled={book?.quantityAvailable < 1}
+              className={book?.quantityAvailable < 1 ? "btn btn-secondary" : "button"}
+            ><Link to={`/reserve-book/${book?.id}`}></Link>
+              {book.quantityAvailable<1 ? "Out of Stock": "Reserve"}
+            </button> 
             <Link to={`/edit-book/${book?.id}`}><button>Manage</button></Link>
             </td>
           </tr>

@@ -25,7 +25,7 @@ const OverdueBooks = () => {
   return (
     <>
     <h2 className='m-5'>Overdue Returns</h2>
-    <div>
+    <div className='m-5'>
       <table>
         <thead>
           <tr>
