@@ -1,7 +1,7 @@
 import React from 'react';
 import Login from './components/Login';
 import Register from './components/Register';
-// import RequireAuth from './components/RequireAuth';
+import RequireAuth from './components/RequireAuth';
 import Layout from './components/Layout';
 import Missing from './components/Missing';
 import Unauthorized from './components/Unauthorized';
@@ -22,7 +22,7 @@ import AddUser from './pages/AddUser';
 import EditUser from './pages/EditUser';
 import AddBook from './pages/AddBook';
 import SearchResults from './pages/SearchResults';
-import LoggedOut from './pages/LoggedOut'
+import LoggedOut from './pages/LoggedOut';
 import { AuthProvider } from './context/AuthProvider';
 
 function App() {
@@ -53,7 +53,7 @@ function App() {
         {/* </Route> */}
 
         {/* admin routes */}
-        {/* <Route element={<RequireAuth allowedRoles={['ADMIN']}/>}> */}
+        <Route element={<RequireAuth allowedRoles={true}/>}> 
         <Route path='admin' element={<Admin />} />
         <Route path='admin-users' element={<AdminUsers />} />
         <Route path='admin-books' element={<AdminBooks />} />
@@ -64,9 +64,7 @@ function App() {
         <Route path='edit-book/:id' element={<EditBook />} />
         <Route path='edit-user/:id' element={<EditUser />} />
         <Route path='edit-reservation/:id' element={<EditReservation />} />
-          
-
-        {/* </Route> */}
+        </Route> 
 
         {/* catch all */}
         <Route path="*" element={<Missing />} />

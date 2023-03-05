@@ -4,6 +4,7 @@ import { useParams } from 'react-router-dom';
 import axios from '../api/axios';
 import { Card, Col, Row, Form } from "react-bootstrap";
 import { Link } from 'react-router-dom';
+import formatDate from '../components/formatDate';
 
 const AddReservation = () => {
 
@@ -46,21 +47,6 @@ const AddReservation = () => {
 
   if (loading) {
     return <p>Loading...</p>;
-  }
-
-  const formatDate = (date) => {
-    if(date){
-        const newDate = new Date(date[0], date[1], date[2], date[3], date[4]);
-        const formattedDate = newDate.toLocaleString('en-US', {
-        year: 'numeric',
-        month: '2-digit',
-        day: '2-digit',
-        hour: '2-digit',
-        minute: '2-digit'
-      });
-      return formattedDate;
-    }
-    return "Null";
   }
 
   return (

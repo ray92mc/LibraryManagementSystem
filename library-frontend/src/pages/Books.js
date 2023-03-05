@@ -1,14 +1,17 @@
-import { React, useState, useEffect } from "react";
+import { React, useState, useEffect, useContext } from "react";
 import axios from "../api/axios";
 import { BsSearch } from "react-icons/bs";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHeart  } from "@fortawesome/free-solid-svg-icons";
+import {AuthContext} from "../context/AuthProvider";
+import { Link } from "react-router-dom";
 
 const Books = () => {
 
   const [books, setBooks] = useState([]);
   const [loading, setLoading] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
+  const { isLoggedIn } = useContext(AuthContext);
 
   useEffect(() => {
     setLoading(true);
@@ -72,16 +75,25 @@ const Books = () => {
             <td>{book.genre}</td>
             <td>{book.rating}/5</td>
             <td>
+            { isLoggedIn ? (
             <button
               onClick={() => alert(book.id)}
               disabled={book.quantityAvailable < 1}
               className={book.quantityAvailable < 1 ? "btn btn-secondary" : "button"}
             >
               {book.quantityAvailable<1 ? "Out of Stock": "Reserve"}
-            </button>
+            </button> ) : ( <Link to="/login"><button
+              disabled={book.quantityAvailable < 1}
+              className={book.quantityAvailable < 1 ? "btn btn-secondary" : "button"}
+            >
+              {book.quantityAvailable<1 ? "Out of Stock": "Reserve"}
+            </button></Link> )
+            }
+            { isLoggedIn ? (
             <button onClick={() => alert(book.id)}>
               <FontAwesomeIcon icon={faHeart} />
-            </button>
+            </button> ) : (" ")
+            }
             </td>
           </tr>
           ))}

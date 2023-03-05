@@ -7,7 +7,7 @@ import AuthContext from "../context/AuthProvider";
 const LOGIN_URL = '/auth/authenticate';
 
 const Login = () => {
-    const { setIsLoggedIn } = useContext(AuthContext);
+    const { setIsLoggedIn, setIsAdmin } = useContext(AuthContext);
 
     const emailRef = useRef();
     const errRef = useRef();
@@ -24,6 +24,8 @@ const Login = () => {
     useEffect(() => {
         setErrMsg('');
     }, [email, pwd])
+
+    
       
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -40,9 +42,15 @@ const Login = () => {
 
             const token = response?.data?.token;
 
+            const role = response?.data.role;
+
+            localStorage.setItem('isAdmin', role === 'ADMIN');
+            setIsAdmin(role === 'ADMIN');
+
             setEmail('');
             setPwd('');
             setIsLoggedIn(true);
+            localStorage.setItem('auth', {email, pwd, token, role})
             localStorage.setItem('isLoggedIn', true);
             localStorage.setItem('token', token);
             setSuccess(true);

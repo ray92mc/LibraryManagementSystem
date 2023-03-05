@@ -1,4 +1,3 @@
-import React from 'react'
 import { NavLink, Link } from 'react-router-dom'
 import {BsSearch} from 'react-icons/bs' 
 import { useState } from 'react';
@@ -8,19 +7,24 @@ import AuthContext from "../context/AuthProvider";
 
 const Header = () => {
     const { isLoggedIn } = useContext(AuthContext);
+    const { isAdmin } = useContext(AuthContext);
     const [searchQuery, setSearchQuery] = useState("");
     const navigate = useNavigate();
-    const { setIsLoggedIn } = useContext(AuthContext);
+    const { setIsLoggedIn, setIsAdmin } = useContext(AuthContext);
     
 
     const logout = async () => {
         // if used in more components, this should be in context 
         // axios to /logout endpoint 
         setIsLoggedIn(false);
+        setIsAdmin(false);
         localStorage.setItem('isLoggedIn', false)
+        localStorage.setItem('isAdmin', false);
+        localStorage.setItem('auth', {});
         localStorage.removeItem('token');
         navigate('/logged-out');
     }
+
 
     const search = (e) => {
         e.preventDefault();
@@ -29,7 +33,7 @@ const Header = () => {
 
       return (
         <>
-            {isLoggedIn ? "Hello" : "No" }
+            {isLoggedIn ? isAdmin ? "Logged in as admin" : "Logged in as user" : "Logged out" }
             <header className='header-top-strip py-3'>
                 <div className='container-xxl'>
                     <div className='row'>
@@ -131,10 +135,10 @@ const Header = () => {
                                     <NavLink to="/contact">Contact</NavLink>
                                 </div>
                             </div>
+                            { isAdmin ? (
                             <div>
                                 <div className="dropdown">
                                     <button className="btn btn-secondary dropdown-toggle bg-transparent border-0 gap-10 d-flex align-items-center" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                        
                                         <span className='me-2 d-inline=block'>Admin</span>
                                     </button>
                                     <ul className="dropdown-menu">
@@ -143,7 +147,8 @@ const Header = () => {
                                         <li><Link className="dropdown-item text-white" to="/admin-reservations">Reservations</Link></li>
                                     </ul>
                                 </div>
-                            </div>
+                            </div> ) : (" ")
+                            }
                         </div>
                     </div>
                 </div>

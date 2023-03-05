@@ -2,6 +2,7 @@ import { React, useState, useEffect } from "react";
 import axios from "../api/axios";
 import { Link } from "react-router-dom";
 import { BsSearch } from "react-icons/bs";
+import formatDate from "../components/formatDate";
 
 const AdminReservations = () => {
 
@@ -21,25 +22,6 @@ axios.get("/reservations")
     setLoading(false);
 });
 }, []);
-  
-const formatDate = (date) => {
-    
-    if(date){
-        const newDate = new Date(date[0], date[1], date[2], date[3], date[4]);
-        const formattedDate = newDate.toLocaleString('en-US', {
-        year: 'numeric',
-        month: '2-digit',
-        day: '2-digit',
-        hour: '2-digit',
-        minute: '2-digit'
-      });
-
-      return formattedDate;
-
-    }
-    
-    return "Null";
-}
 
 const search = async () => {
     try {
