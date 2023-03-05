@@ -3,7 +3,6 @@ import { useContext } from "react";
 import {Link} from 'react-router-dom';
 import axios from "../api/axios";
 import AuthContext from "../context/AuthProvider";
-import setAuth from '../hooks/useAuth';
 
 const LOGIN_URL = '/auth/authenticate';
 
@@ -71,7 +70,6 @@ const Login = () => {
                 <p>
                    You are logged in!
                 </p>
-                <Link to="/"><button>Home</button></Link>
             </section>
         ) : (
         <section className="auth-form">

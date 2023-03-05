@@ -1,20 +1,7 @@
-import { useNavigate, Link } from "react-router-dom";
-import { useContext } from "react";
-import AuthContext from "../context/AuthProvider";
+import { Link } from "react-router-dom";
 
 const Home = () => {
-    const navigate = useNavigate();
-    const { setIsLoggedIn } = useContext(AuthContext);
     
-
-    const logout = async () => {
-        // if used in more components, this should be in context 
-        // axios to /logout endpoint 
-        setIsLoggedIn(false);
-        localStorage.setItem('isLoggedIn', false)
-        localStorage.removeItem('token');
-        navigate('/logged-out');
-    }
 
     return (
         <>
@@ -27,9 +14,6 @@ const Home = () => {
                         <Link to={"register"} className="hero-link">Sign Up</Link>
                     </div>
                 </div>
-            </div>
-            <div className="flexGrow">
-                <button className="m-5" onClick={logout}>Sign Out</button>
             </div>
         </section>
         </>
