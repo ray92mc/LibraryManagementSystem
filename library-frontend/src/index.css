@@ -346,6 +346,30 @@ font-size: 1.2rem;
 text-decoration: underline;
 }
 
+.checkbox {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  margin-top: 1rem;
+}
+
+.checkbox p {
+  margin-right: 1rem;
+  font-size: 1.4rem;
+}
+
+.checkbox label {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin-right: 1rem;
+}
+
+.checkbox input[type="radio"] {
+  margin-right: 0.5rem;
+}
+
 /* Register End */
 
 /* Success start */

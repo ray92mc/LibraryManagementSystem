@@ -19,6 +19,7 @@ import EditReservation from './pages/EditReservation';
 import EditBook from './pages/EditBook';
 import AddReservation from './pages/AddReservation';
 import AddUser from './pages/AddUser';
+import EditUser from './pages/EditUser';
 
 function App() {
 
@@ -49,10 +50,11 @@ function App() {
         <Route path='admin' element={<Admin />} />
         <Route path='admin-users' element={<AdminUsers />} />
         <Route path='admin-books' element={<AdminBooks />} />
+        <Route path='admin-reservations' element={<AdminReservations />} />
         <Route path='add-user' element={<AddUser /> } />
         <Route path='reserve-book/:bookId' element={<AddReservation />} />
         <Route path='edit-book/:id' element={<EditBook />} />
-        <Route path='admin-reservations' element={<AdminReservations />} />
+        <Route path='edit-user/:id' element={<EditUser />} />
         <Route path='edit-reservation/:id' element={<EditReservation />} />
           
 

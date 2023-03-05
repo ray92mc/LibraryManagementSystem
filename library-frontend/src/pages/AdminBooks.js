@@ -21,19 +21,19 @@ const Books = () => {
     });
   }, []);
 
-  const addBook = (book) => {
-    setLoading(true);
-    axios
-      .post("/books", { ...book })
-      .then((res) => {
-        setBooks([...books, res.data]);
-        setLoading(false);
-      })
-      .catch((err) => {
-        console.error(err);
-        setLoading(false);
-      });
-  };
+  // const addBook = (book) => {
+  //   setLoading(true);
+  //   axios
+  //     .post("/books", { ...book })
+  //     .then((res) => {
+  //       setBooks([...books, res.data]);
+  //       setLoading(false);
+  //     })
+  //     .catch((err) => {
+  //       console.error(err);
+  //       setLoading(false);
+  //     });
+  // };
 
   return (
     <div className="container-xxl mt-2">

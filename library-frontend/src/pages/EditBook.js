@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from '../api/axios';
 import { Card, Col, Row, Form } from "react-bootstrap";
-import { Link, useLocation, useParams } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 
 const EditBook = () => {
 
@@ -15,7 +15,7 @@ const EditBook = () => {
     const [rating, setRating] = useState('');
     const [isbn, setIsbn] = useState('');
     const { id } = useParams();
-    const history = useLocation();
+    const navigate = useNavigate();
     
     useEffect(() => {
         setLoading(true);
@@ -54,6 +54,8 @@ const EditBook = () => {
       rating,
       isbn
     });
+    alert("Book saved");
+    navigate("/admin-books");
     // update local state with new book details
     setBook(response.data);
   };
@@ -64,31 +66,14 @@ const EditBook = () => {
       .delete(`/books/${id}`)
       .then(() => {
         setLoading(false);
-        history("/admin-books");
+        alert("Book deleted");
+        navigate("/admin-books");
       })
       .catch((err) => {
         console.error(err);
         setLoading(false);
       });
   };
-
-  // const updateBook = (id, updatedBook) => {
-  //   setLoading(true);
-  //   axios
-  //     .put(`/books/${id}`, {
-  //       ...updatedBook,
-  //     })
-  //     .then((res) => {
-  //       setBooks(
-  //         books.map((book) => (book.id === id ? res.data : book))
-  //       );
-  //       setLoading(false);
-  //     })
-  //     .catch((err) => {
-  //       console.error(err);
-  //       setLoading(false);
-  //     });
-  // }
 
   return (
     <>

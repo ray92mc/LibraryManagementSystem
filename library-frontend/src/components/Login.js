@@ -1,6 +1,6 @@
 import { useRef, useState, useEffect } from "react"
 import useAuth from "../hooks/useAuth";
-import {Link, useNavigate, useLocation} from 'react-router-dom';
+import {Link} from 'react-router-dom';
 
 
 import axios from "../api/axios";
@@ -10,16 +10,13 @@ const LOGIN_URL = '/auth/authenticate';
 const Login = () => {
     const { setAuth } = useAuth();
 
-    const navigate = useNavigate();
-    const location = useLocation();
-    const from = location.state?.from?.pathname || "/";
-
     const emailRef = useRef();
     const errRef = useRef();
 
     const [email, setEmail] = useState('');
     const [pwd, setPwd] = useState('');
     const [errMsg, setErrMsg] = useState('');
+    const [success, setSuccess] = useState(false);
 
     useEffect(() => {
         emailRef.current.focus();
@@ -49,8 +46,8 @@ const Login = () => {
             setAuth({email, pwd, token, role});
             setEmail('');
             setPwd('');
-            navigate(from, { replace: true });
             localStorage.setItem('token', token);
+            setSuccess(true);
         
         } catch (err) {
             if (!err?.response) {
@@ -68,7 +65,16 @@ const Login = () => {
     
 
     return(
-
+        <>
+        {success ? (
+            <section className="success-page">
+                <h1>Success!</h1>
+                <p>
+                   You are logged in!
+                </p>
+                <Link to="/"><button>Home</button></Link>
+            </section>
+        ) : (
         <section className="auth-form">
             <p ref={errRef} className={errMsg ? "errmsg" : "offscreen"} aria-live="assertive">{errMsg}</p>
             <h1>Sign In</h1>
@@ -99,7 +105,8 @@ const Login = () => {
                     <Link to="/register">Sign Up</Link>
                 </span>
             </p>
-        </section>
+        </section>)}
+        </>
     )
 }
 

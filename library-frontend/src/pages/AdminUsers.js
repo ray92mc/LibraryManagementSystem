@@ -21,8 +21,6 @@ useEffect(() => {
     });
 }, []);
 
-
-
 return (
   <div className="container mt-2">
     {loading ? (
@@ -48,6 +46,7 @@ return (
           <th>Lastname</th>
           <th>Email</th>
           <th>Balance Owed</th>
+          <th>Role</th>
           <th>Actions</th>
         </tr>
       </thead>
@@ -59,8 +58,9 @@ return (
           <td>{user.lastname}</td>
           <td>{user.email}</td>
           <td>€{user.fine}</td>
+          <td>{user.role}</td>
           <td>
-            <button onClick={() => alert(user.id)}>Manage</button>
+          <Link to={`/edit-user/${user.id}`}><button>Manage</button></Link>
           </td>
         </tr>
         ))}
