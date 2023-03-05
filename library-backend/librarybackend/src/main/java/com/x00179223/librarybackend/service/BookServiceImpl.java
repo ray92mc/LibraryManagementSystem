@@ -1,8 +1,5 @@
 package com.x00179223.librarybackend.service;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.x00179223.librarybackend.model.Book;
 import com.x00179223.librarybackend.repository.BookRepository;
 import org.springframework.beans.factory.annotation.Autowired;

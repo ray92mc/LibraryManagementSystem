@@ -74,7 +74,7 @@ public class ReservationController {
 
     @GetMapping("/overdue")
     public ResponseEntity<List<Reservation>> checkForOverdueReservations() {
-        List<Reservation> overdueReservations = reservationService.checkForOverdueReservations();
+        List<Reservation> overdueReservations = reservationService.findOverdueCheckins();
         return ResponseEntity.ok(overdueReservations);
     }
 }

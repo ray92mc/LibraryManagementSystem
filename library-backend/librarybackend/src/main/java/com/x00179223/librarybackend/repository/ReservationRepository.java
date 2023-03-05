@@ -9,12 +9,16 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import java.time.LocalDateTime;
+import java.util.Arrays;
 import java.util.List;
 
 public interface ReservationRepository extends JpaRepository<Reservation, Long> {
     List<Reservation> findByUser(User user);
     List<Reservation> findByBook(Book book);
 
-    @Query("SELECT r FROM Reservation r WHERE r.returned = false AND r.dueDate < :currentDateTime")
-    List<Reservation> findOverdueReservations(@Param("currentDateTime") LocalDateTime currentDateTime);
+    @Query("SELECT r FROM Reservation r WHERE r.pickUpBy < :now AND r.checkedOutAt IS NULL")
+    List<Reservation> findAllByPickUpByBeforeAndCheckedOutAtIsNull(LocalDateTime now);
+
+    @Query("SELECT r FROM Reservation r WHERE r.checkedOutAt IS NOT NULL AND r.dueDate < :currentDateTime AND r.returned = false")
+    List<Reservation> findAllByCheckedOutAtIsNotNullAndDueDateBeforeAndReturnedIsFalse(@Param("currentDateTime") LocalDateTime currentDateTime);
 }

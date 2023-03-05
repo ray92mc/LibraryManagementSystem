@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class ReservationServiceImpl implements ReservationService {
@@ -22,6 +23,12 @@ public class ReservationServiceImpl implements ReservationService {
     @Autowired
     public ReservationServiceImpl(ReservationRepository reservationRepository, BookService bookService, UserService userService) {
         this.reservationRepository = reservationRepository;
+        this.bookService = bookService;
+        this.userService = userService;
+    }
+
+    public ReservationServiceImpl(ReservationRepository reservationRepository, ReservationRepository reservationRepository1, BookService bookService, UserService userService) {
+        this.reservationRepository = reservationRepository1;
         this.bookService = bookService;
         this.userService = userService;
     }
@@ -103,7 +110,17 @@ public class ReservationServiceImpl implements ReservationService {
     }
 
     @Override
-    public List<Reservation> checkForOverdueReservations(){
-        return reservationRepository.findOverdueReservations(LocalDateTime.now());
+    public List<Reservation> findOverdueCheckins() {
+        LocalDateTime now = LocalDateTime.now();
+        return reservationRepository.findAllByCheckedOutAtIsNotNullAndDueDateBeforeAndReturnedIsFalse(now);
+    }
+
+    @Override
+    public void purgeNonPickedUpReservations() {
+        LocalDateTime now = LocalDateTime.now();
+        List<Reservation> overdueReservations = reservationRepository.findAllByPickUpByBeforeAndCheckedOutAtIsNull(now);
+        for (Reservation reservation : overdueReservations) {
+            reservationRepository.delete(reservation);
+        }
     }
 }
