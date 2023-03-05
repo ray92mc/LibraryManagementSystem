@@ -75,23 +75,15 @@ public class ReservationController {
     }
 
     @GetMapping("/overdue-checkins")
-    public ResponseEntity<List<Reservation>> findOverdueCheckins() {
+    public ResponseEntity<List<Reservation>> getOverdueCheckins() {
         List<Reservation> overdueReservations = reservationService.findOverdueCheckins();
-        if (overdueReservations.isEmpty()) {
-            return ResponseEntity.noContent().build();
-        } else {
-            return ResponseEntity.ok(overdueReservations);
-        }
+        return new ResponseEntity<>(overdueReservations, HttpStatus.OK);
     }
 
-    @DeleteMapping("/purge-non-picked-up")
-    public ResponseEntity<String> purgeNonPickedUpReservations() {
-        try {
-            reservationService.purgeNonPickedUpReservations();
-            return new ResponseEntity<>("Successfully purged non-picked up reservations", HttpStatus.OK);
-        } catch (Exception e) {
-            return new ResponseEntity<>("Error purging non-picked up reservations: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
-        }
+    @GetMapping("/purge-non-picked-up")
+    public ResponseEntity<Void> purgeNonPickedUpReservations() {
+        reservationService.purgeNonPickedUpReservations();
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
 

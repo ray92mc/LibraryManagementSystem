@@ -24,6 +24,7 @@ import AddBook from './pages/AddBook';
 import SearchResults from './pages/SearchResults';
 import LoggedOut from './pages/LoggedOut';
 import { AuthProvider } from './context/AuthProvider';
+import OverdueReservations from './pages/OverdueReservations';
 
 function App() {
 
@@ -64,6 +65,7 @@ function App() {
         <Route path='edit-book/:id' element={<EditBook />} />
         <Route path='edit-user/:id' element={<EditUser />} />
         <Route path='edit-reservation/:id' element={<EditReservation />} />
+        <Route path='overdue-reservations' element={<OverdueReservations />} />
         </Route> 
 
         {/* catch all */}
