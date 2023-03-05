@@ -1,10 +1,24 @@
 import React from 'react'
 import { NavLink, Link } from 'react-router-dom'
 import {BsSearch} from 'react-icons/bs' 
+import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useContext } from 'react';
+import AuthContext from "../context/AuthProvider";
 
 const Header = () => {
+    const { isLoggedIn } = useContext(AuthContext);
+    const [searchQuery, setSearchQuery] = useState("");
+    const navigate = useNavigate();
+
+    const search = (e) => {
+        e.preventDefault();
+        navigate(`/search/${searchQuery}`);
+      };
+
   return (
     <>
+        {isLoggedIn ? "Hello" : "No" }
         <header className='header-top-strip py-3'>
             <div className='container-xxl'>
                 <div className='row'>
@@ -32,9 +46,11 @@ const Header = () => {
                             placeholder="Search books, authors or category..." 
                             aria-label="Search books, authors or category..." 
                             aria-describedby="basic-addon2"
+                            value={searchQuery}
+                            onChange={(e) => setSearchQuery(e.target.value)}
                             />
-                            <span className="input-group-text p-3" id="basic-addon2">
-                                <BsSearch className='fs-5'/>
+                            <span className="admin-search p-3">
+                                <BsSearch className='fs-5' onClick={search}/>
                             </span>
                         </div>
                     </div>
@@ -97,7 +113,19 @@ const Header = () => {
                                     <NavLink to="/books">Books</NavLink>
                                     <NavLink to="/about">About</NavLink>
                                     <NavLink to="/contact">Contact</NavLink>
-                                    <NavLink to="/admin">Admin</NavLink>
+                                </div>
+                            </div>
+                            <div>
+                                <div className="dropdown">
+                                    <button className="btn btn-secondary dropdown-toggle bg-transparent border-0 gap-10 d-flex align-items-center" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                        
+                                        <span className='me-2 d-inline=block'>Admin</span>
+                                    </button>
+                                    <ul className="dropdown-menu">
+                                        <li><Link className="dropdown-item text-white" to="/admin-books">Books</Link></li>
+                                        <li><Link className="dropdown-item text-white" to="/admin-users">Users</Link></li>
+                                        <li><Link className="dropdown-item text-white" to="/admin-reservations">Reservations</Link></li>
+                                    </ul>
                                 </div>
                             </div>
                         </div>
@@ -105,6 +133,7 @@ const Header = () => {
                 </div>
             </div>
         </header>
+        
     </>
   );
 };

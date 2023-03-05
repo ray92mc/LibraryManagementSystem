@@ -7,6 +7,7 @@ const AdminReservations = () => {
 
   const [reservations, setReservations] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [searchQuery, setSearchQuery] = useState('');
 
 useEffect(() => {
 setLoading(true);
@@ -20,20 +21,6 @@ axios.get("/reservations")
     setLoading(false);
 });
 }, []);
-
-const addReservation = (reservation) => {
-setLoading(true);
-axios
-    .post("/reservations", { ...reservation })
-    .then((res) => {
-    setReservations([...reservations, res.data]);
-    setLoading(false);
-    })
-    .catch((err) => {
-    console.error(err);
-    setLoading(false);
-    });
-};
   
 const formatDate = (date) => {
     
@@ -54,6 +41,17 @@ const formatDate = (date) => {
     return "Null";
 }
 
+const search = async () => {
+    try {
+      const response = await axios.get(`/reservations/${searchQuery}`);
+      const data = response.data;
+      setReservations([data]);
+    } catch (error) {
+      console.error(error);
+      setReservations([]);
+    }
+    };
+
 return (
 <div className="container-xxl mt-2">
     {loading ? (
@@ -66,11 +64,13 @@ return (
         placeholder="Search reservations by ID..." 
         aria-label="Search reservations by ID" 
         aria-describedby="basic-addon2"
+        value={searchQuery}
+        onChange={(e) => setSearchQuery(e.target.value)}
         />
-        <span className="input-group-text p-3" id="basic-addon2">
-            <BsSearch className='fs-5'/>
+        <span className="admin-search p-3">
+            <BsSearch className='fs-5' onClick={search}/>
         </span>
-    </div>
+      </div>
     <div>
     <table>
     <thead>

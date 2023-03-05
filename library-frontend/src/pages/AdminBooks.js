@@ -7,6 +7,7 @@ const Books = () => {
 
   const [books, setBooks] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [searchQuery, setSearchQuery] = useState('');
 
   useEffect(() => {
     setLoading(true);
@@ -21,19 +22,16 @@ const Books = () => {
     });
   }, []);
 
-  // const addBook = (book) => {
-  //   setLoading(true);
-  //   axios
-  //     .post("/books", { ...book })
-  //     .then((res) => {
-  //       setBooks([...books, res.data]);
-  //       setLoading(false);
-  //     })
-  //     .catch((err) => {
-  //       console.error(err);
-  //       setLoading(false);
-  //     });
-  // };
+  const search = async () => {
+  try {
+    const response = await axios.get(`/books/search/${searchQuery}`);
+    const data = response.data;
+    setBooks(data);
+  } catch (error) {
+    console.error(error);
+    setBooks([]);
+  }
+  };
 
   return (
     <div className="container-xxl mt-2">
@@ -42,16 +40,21 @@ const Books = () => {
       ) : (
       <>
       <div className="container py-5 input-group">
-        <input type="text" 
-        className="form-control py-2" 
-        placeholder="Search books by title, author or category..." 
-        aria-label="Search reservations by title, author or category" 
-        aria-describedby="basic-addon2"
+        <input 
+            type="text"
+            className="form-control py-2"
+            placeholder="Search books by title, author or category..."
+            aria-label="Search reservations by title, author or category"
+            aria-describedby="basic-addon2"
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
         />
-        <span className="input-group-text p-3" id="basic-addon2">
-            <BsSearch className='fs-5'/>
+        <span className="admin-search p-3">
+            <BsSearch className='fs-5' onClick={search}/>
         </span>
       </div>
+      <div className="table-responsive">
+      { books.length > 0 ? (
       <table>
         <thead>
           <tr>
@@ -60,29 +63,34 @@ const Books = () => {
             <th>Author</th>
             <th>Category</th>
             <th>Rating</th>
+            <th>Quantity Av.</th>
             <th>Actions</th>
           </tr>
         </thead>
         <tbody>
           {books.map((book) => (
-          <tr key={book.id}>
-            <td>{book.id}</td>
-            <td>{book.title}</td>
-            <td>{book.author}</td>
-            <td>{book.genre}</td>
-            <td>{book.rating}/5</td>
+          <tr key={book?.id}>
+            <td>{book?.id}</td>
+            <td>{book?.title}</td>
+            <td>{book?.author}</td>
+            <td>{book?.genre}</td>
+            <td>{book?.rating}/5</td>
+            <td>{book?.quantityAvailable}</td>
             <td>
-            <Link to={`/reserve-book/${book.id}`}><button>Reserve</button></Link>
-            <Link to={`/edit-book/${book.id}`}><button>Manage</button></Link>
+            <Link to={`/reserve-book/${book?.id}`}><button>Reserve</button></Link>
+            <Link to={`/edit-book/${book?.id}`}><button>Manage</button></Link>
             </td>
           </tr>
           ))}
         </tbody>
       </table>
+      ) : <h1 className="py-5">No books found...</h1>
+      }
+      </div>
       </>
       )
       }
-      <button className="mb-5" onClick={() => alert({})}>Add Book</button>
+      <Link to="/add-book"><button className="mb-5">Add Book</button></Link>
     </div>
     );
   }

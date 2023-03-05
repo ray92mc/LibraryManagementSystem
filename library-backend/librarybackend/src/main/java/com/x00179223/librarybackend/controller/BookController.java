@@ -54,8 +54,8 @@ public class BookController {
         bookServiceImpl.delete(id);
     }
 
-    @GetMapping("/search")
-    public List<Book> searchBooks(@RequestBody String query) throws JsonProcessingException {
+    @GetMapping("/search/{query}")
+    public List<Book> searchBooks(@PathVariable String query) throws JsonProcessingException {
         return bookServiceImpl.searchByTitleOrAuthorOrGenre(query.toLowerCase());
     }
 }

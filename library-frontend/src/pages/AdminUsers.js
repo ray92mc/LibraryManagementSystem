@@ -6,6 +6,7 @@ import { Link } from "react-router-dom";
 function UserTable() {
   const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [searchQuery, setSearchQuery] = useState('');
 
 useEffect(() => {
   setLoading(true);
@@ -21,6 +22,17 @@ useEffect(() => {
     });
 }, []);
 
+const search = async () => {
+  try {
+    const response = await axios.get(`/users/id/${searchQuery}`);
+    const data = response.data;
+    setUsers([data]);
+  } catch (error) {
+    console.error(error);
+    setUsers([]);
+  }
+  };
+
 return (
   <div className="container mt-2">
     {loading ? (
@@ -33,9 +45,11 @@ return (
         placeholder="Search users by ID..." 
         aria-label="Search reservations by title, author or category" 
         aria-describedby="basic-addon2"
+        value={searchQuery}
+        onChange={(e) => setSearchQuery(e.target.value)}
         />
-        <span className="input-group-text p-3" id="basic-addon2">
-            <BsSearch className='fs-5'/>
+        <span className="admin-search p-3">
+            <BsSearch className='fs-5' onClick={search}/>
         </span>
       </div>
     <table>
@@ -52,15 +66,15 @@ return (
       </thead>
       <tbody>
         {users.map((user) => (
-        <tr key={user.id}>
-          <td>{user.id}</td>
-          <td>{user.firstname}</td>
-          <td>{user.lastname}</td>
-          <td>{user.email}</td>
-          <td>€{user.fine}</td>
-          <td>{user.role}</td>
+        <tr key={user?.id}>
+          <td>{user?.id}</td>
+          <td>{user?.firstname}</td>
+          <td>{user?.lastname}</td>
+          <td>{user?.email}</td>
+          <td>€{user?.fine}</td>
+          <td>{user?.role}</td>
           <td>
-          <Link to={`/edit-user/${user.id}`}><button>Manage</button></Link>
+          <Link to={`/edit-user/${user?.id}`}><button>Manage</button></Link>
           </td>
         </tr>
         ))}

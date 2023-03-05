@@ -20,11 +20,16 @@ import EditBook from './pages/EditBook';
 import AddReservation from './pages/AddReservation';
 import AddUser from './pages/AddUser';
 import EditUser from './pages/EditUser';
+import AddBook from './pages/AddBook';
+import SearchResults from './pages/SearchResults';
+import LoggedOut from './pages/LoggedOut'
+import { AuthProvider } from './context/AuthProvider';
 
 function App() {
 
   return (
     <div>
+    <AuthProvider>
     <Routes>
       <Route path = "/" element={<Layout />}>
 
@@ -35,9 +40,11 @@ function App() {
  
         {/* public routes */}
         <Route path="login" element={<Login />} />
+        <Route path="logged-out" element={<LoggedOut />} />
         <Route path="register" element={<Register />} />
         <Route path="linkpage" element={<LinkPage />} />
         <Route path="unauthorized" element={<Unauthorized />} />
+        <Route path="search/:query" element={<SearchResults />} />
 
 
         {/* private routes */}
@@ -52,6 +59,7 @@ function App() {
         <Route path='admin-books' element={<AdminBooks />} />
         <Route path='admin-reservations' element={<AdminReservations />} />
         <Route path='add-user' element={<AddUser /> } />
+        <Route path='add-book' element={<AddBook /> } />
         <Route path='reserve-book/:bookId' element={<AddReservation />} />
         <Route path='edit-book/:id' element={<EditBook />} />
         <Route path='edit-user/:id' element={<EditUser />} />
@@ -65,6 +73,7 @@ function App() {
 
       </Route>
     </Routes>
+    </AuthProvider>
     </div>
   );
 }

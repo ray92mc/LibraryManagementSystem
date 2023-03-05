@@ -423,6 +423,12 @@ background-color: var(--color-febd69);
 color: var(--color-232f3e);
 font-weight: 600;
 }
+
+.admin-search {
+  background-color: var(--color-febd69);
+  cursor: pointer;
+  border-radius: 10px;
+}
 /*Admin page end*/  
 
 /*About page start*/

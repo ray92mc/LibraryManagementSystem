@@ -43,12 +43,9 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public List<Book> searchByTitleOrAuthorOrGenre(String query) throws JsonProcessingException {
-        ObjectMapper objectMapper = new ObjectMapper();
-        JsonNode jsonNode = objectMapper.readTree(query); // parse the JSON string
-        String searchQuery = jsonNode.get("query").asText();
-        List<Book> books = bookRepository.searchByTitleOrAuthorOrGenre(searchQuery);
-        System.out.println(searchQuery);
+    public List<Book> searchByTitleOrAuthorOrGenre(String query) {
+        List<Book> books = bookRepository.searchByTitleOrAuthorOrGenre(query);
+        System.out.println(query);
         System.out.println(books);
         return books;
     }

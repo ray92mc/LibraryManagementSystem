@@ -1,14 +1,14 @@
 import { useRef, useState, useEffect } from "react"
-import useAuth from "../hooks/useAuth";
+import { useContext } from "react";
 import {Link} from 'react-router-dom';
-
-
 import axios from "../api/axios";
+import AuthContext from "../context/AuthProvider";
+import setAuth from '../hooks/useAuth';
 
 const LOGIN_URL = '/auth/authenticate';
 
 const Login = () => {
-    const { setAuth } = useAuth();
+    const { setIsLoggedIn } = useContext(AuthContext);
 
     const emailRef = useRef();
     const errRef = useRef();
@@ -41,11 +41,10 @@ const Login = () => {
 
             const token = response?.data?.token;
 
-            const role = response?.data?.role;
-
-            setAuth({email, pwd, token, role});
             setEmail('');
             setPwd('');
+            setIsLoggedIn(true);
+            localStorage.setItem('isLoggedIn', true);
             localStorage.setItem('token', token);
             setSuccess(true);
         
