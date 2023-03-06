@@ -25,6 +25,9 @@ import SearchResults from './pages/SearchResults';
 import LoggedOut from './pages/LoggedOut';
 import { AuthProvider } from './context/AuthProvider';
 import OverdueReservations from './pages/OverdueReservations';
+import Favourites from './pages/Favourites';
+import UserLoans from './pages/UserLoans';
+import UserAccountDetails from './pages/UserAccountDetails';
 
 function App() {
 
@@ -50,7 +53,10 @@ function App() {
 
         {/* private routes */}
         {/* <Route element={<RequireAuth allowedRoles={['USER', 'ADMIN']}/>}> */}
-        {/* <Route path='/' element={<Home />} /> */}
+        <Route path ="favourites" element={<Favourites />} />
+        <Route path ="user-loans" element={<UserLoans />} />
+        <Route path ="user-account-details" element={<UserAccountDetails />} />
+
         {/* </Route> */}
 
         {/* admin routes */}

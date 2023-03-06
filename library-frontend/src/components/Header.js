@@ -73,19 +73,19 @@ const Header = () => {
                         <div className='col-5'>
                             <header className='header-upper-links d-flex align-items-center justify-content-between'>
                                 <div>
-                                    <Link className='d-flex align-items-center gap-10 text-white'>
+                                    <Link className='d-flex align-items-center gap-10 text-white' to='/user-loans'>
                                         <img src="images/compare.svg" alt="compare" />
                                             <p className='mb-0'>Your <br/> Loans</p>
                                     </Link>
                                 </div>
                                 <div>
-                                    <Link className='d-flex align-items-center gap-10 text-white'>
+                                    <Link className='d-flex align-items-center gap-10 text-white' to="/favourites">
                                         <img src="images/wishlist.svg" alt="wishlist" />
                                             <p className='mb-0'>Your <br/> Favourites</p>
                                     </Link>
                                 </div>
                                 <div>
-                                    <Link className='d-flex align-items-center gap-10 text-white'>
+                                    <Link className='d-flex align-items-center gap-10 text-white' to='/user-account-details'>
                                         <img src="images/user.svg" alt="user" />
                                         <p className='mb-0'>Your <br/> Account</p>
                                     </Link>
