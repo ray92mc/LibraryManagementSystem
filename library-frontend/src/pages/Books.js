@@ -57,6 +57,7 @@ const Books = () => {
             <BsSearch className='fs-5' onClick={search}/>
         </span>
       </div>
+      <div><h2>All Books</h2><p style={{ color: 'red' }}>To-do: Pagination, Sorting</p></div>
       <table>
         <thead>
           <tr>

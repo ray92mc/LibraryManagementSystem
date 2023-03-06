@@ -53,7 +53,7 @@ const Books = () => {
             <BsSearch className='fs-5' onClick={search}/>
         </span>
       </div>
-      <div><h2>Admin Books</h2></div>
+      <div><h2>Admin Books</h2><p style={{ color: 'red' }}>To-do: Pagination, Sorting</p></div>
       <div className="table-responsive">
       { books.length > 0 ? (
       <table>
@@ -78,12 +78,14 @@ const Books = () => {
             <td>{book?.rating}/5</td>
             <td>{book?.quantityAvailable}</td>
             <td>
-            <button
-              disabled={book?.quantityAvailable < 1}
-              className={book?.quantityAvailable < 1 ? "btn btn-secondary" : "button"}
-            ><Link to={`/reserve-book/${book?.id}`}></Link>
-              {book.quantityAvailable<1 ? "Out of Stock": "Reserve"}
-            </button> 
+            { book.quantityAvailable > 0 ? (
+            <Link to={`/reserve-book/${book?.id}`}><button>Reserve</button></Link>) : <button
+            disabled={book.quantityAvailable < 1}
+            className={book.quantityAvailable < 1 ? "btn btn-secondary" : "button"}
+          >
+            {book.quantityAvailable<1 ? "Out of Stock": "Reserve"}
+            </button>
+            }
             <Link to={`/edit-book/${book?.id}`}><button>Manage</button></Link>
             </td>
           </tr>

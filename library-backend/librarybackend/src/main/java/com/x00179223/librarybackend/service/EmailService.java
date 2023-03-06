@@ -1,2 +1,8 @@
-package com.x00179223.librarybackend.service;public class EmailService {
+package com.x00179223.librarybackend.service;
+
+import com.x00179223.librarybackend.model.User;
+import org.springframework.stereotype.Service;
+
+public interface EmailService {
+    void sendOverdueEmail(User user);
 }

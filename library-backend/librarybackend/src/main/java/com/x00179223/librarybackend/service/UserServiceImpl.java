@@ -1,6 +1,5 @@
 package com.x00179223.librarybackend.service;
 
-import com.x00179223.librarybackend.exceptions.ResourceNotFoundException;
 import com.x00179223.librarybackend.model.User;
 import com.x00179223.librarybackend.model.UserUpdateRequest;
 import com.x00179223.librarybackend.repository.UserRepository;
@@ -20,8 +19,12 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private UserRepository userRepository;
 
-    public UserServiceImpl(PasswordEncoder passwordEncoder) {
+    private final EmailService emailService;
+
+    public UserServiceImpl(PasswordEncoder passwordEncoder, UserRepository userRepository, EmailService emailService) {
         this.passwordEncoder = passwordEncoder;
+        this.userRepository = userRepository;
+        this.emailService = emailService;
     }
 
     @Override
@@ -79,6 +82,7 @@ public class UserServiceImpl implements UserService {
         }
         user.setFine(newFine);
         user.setLastFineAddedAt(today);
+        emailService.sendOverdueEmail(user);
         userRepository.save(user);
     }
 

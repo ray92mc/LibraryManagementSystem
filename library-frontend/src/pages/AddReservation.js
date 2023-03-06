@@ -53,7 +53,7 @@ const AddReservation = () => {
     <>
       {success ? (
             <section className="success-page">
-                <h1>Reservation Confirmed!</h1>
+                <h1>Reservation #{reservation?.id} Confirmed!</h1>
                 <Card className='mb-5'>
             <Card.Body>
               <Card.Title>Reservation Details</Card.Title>

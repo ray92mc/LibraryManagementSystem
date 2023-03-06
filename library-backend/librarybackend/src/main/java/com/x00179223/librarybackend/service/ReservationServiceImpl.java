@@ -12,7 +12,6 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Service
 public class ReservationServiceImpl implements ReservationService {
@@ -21,6 +20,7 @@ public class ReservationServiceImpl implements ReservationService {
     private final BookService bookService;
     private final UserService userService;
 
+
     @Autowired
     public ReservationServiceImpl(ReservationRepository reservationRepository, BookService bookService, UserService userService) {
         this.reservationRepository = reservationRepository;
@@ -28,7 +28,7 @@ public class ReservationServiceImpl implements ReservationService {
         this.userService = userService;
     }
 
-    public ReservationServiceImpl(ReservationRepository reservationRepository, ReservationRepository reservationRepository1, BookService bookService, UserService userService) {
+    public ReservationServiceImpl(ReservationRepository reservationRepository, ReservationRepository reservationRepository1, BookService bookService, UserService userService, EmailService emailService) {
         this.reservationRepository = reservationRepository1;
         this.bookService = bookService;
         this.userService = userService;

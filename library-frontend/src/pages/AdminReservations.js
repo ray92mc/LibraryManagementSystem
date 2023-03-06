@@ -53,7 +53,7 @@ return (
             <BsSearch className='fs-5' onClick={search}/>
         </span>
       </div>
-      <div><h2>Admin Reservations</h2></div>
+    <div><h2>Admin Reservations</h2><p style={{ color: 'red' }}>To-do: Pagination, Sorting</p></div>
     <div>
     <table>
     <thead>

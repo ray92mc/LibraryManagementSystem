@@ -99,12 +99,24 @@ const Header = () => {
                             </header>
                         </div>
                         :
+                        <>
                         <div className='col-5'>
-                            <Link className='d-flex align-items-center gap-10 text-white' to={"login"}>
-                                <img src="images/user.svg" alt="user" />
-                                <p className='mb-0'>Login</p>
-                            </Link>
+                            <div className='header-upper-links d-flex align-items-center'>
+                                <div>
+                                    <Link className='d-flex align-items-center gap-10 text-white' to={"login"}>
+                                    <img src="images/login.svg" alt="user" />
+                                    <p className='mb-0'>Login</p>
+                                    </Link>
+                                </div>
+                                <div style={{marginLeft:"15px"}}>
+                                    <Link className='d-flex align-items-center gap-10 text-white' to={"register"}>
+                                    <img src="images/register.svg" alt="user" />
+                                    <p className='mb-0'>Register</p>
+                                    </Link>
+                                </div>
+                            </div>
                         </div>
+                        </>
                         }
                     </div>
                 </div>
