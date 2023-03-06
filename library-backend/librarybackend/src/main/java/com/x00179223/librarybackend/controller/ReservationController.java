@@ -86,6 +86,12 @@ public class ReservationController {
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
+    @GetMapping("/overdue-pickups")
+    public ResponseEntity<List<Reservation>> getOverduePickups() {
+        List<Reservation> overduePickups = reservationService.findOverduePickups();
+        return ResponseEntity.ok(overduePickups);
+    }
+
 
 
 }

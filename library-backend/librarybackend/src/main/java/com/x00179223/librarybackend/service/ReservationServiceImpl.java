@@ -6,6 +6,7 @@ import com.x00179223.librarybackend.model.Reservation;
 import com.x00179223.librarybackend.model.User;
 import com.x00179223.librarybackend.repository.ReservationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -109,10 +110,23 @@ public class ReservationServiceImpl implements ReservationService {
         return reservationRepository.save(reservation);
     }
 
+    @Scheduled(fixedRate = 4 * 60 * 60 * 1000) // run every 4 hours (1000=1second)
     @Override
     public List<Reservation> findOverdueCheckins() {
+        System.out.println("Checking for overdue reservations");
         LocalDateTime now = LocalDateTime.now();
-        return reservationRepository.findAllByCheckedOutAtIsNotNullAndDueDateBeforeAndReturnedIsFalse(now);
+        List<Reservation> overdueReservations = reservationRepository.findAllByCheckedOutAtIsNotNullAndDueDateBeforeAndReturnedIsFalse(now);
+        for (Reservation reservation : overdueReservations) {
+            User user = reservation.getUser();
+            if (user != null) {
+                double fine = user.getFine() + 0.50;
+                if (fine > 50.0) {
+                    fine = 50.0;
+                }
+                userService.addFine(user.getId(), fine);
+            }
+        }
+        return overdueReservations;
     }
 
     @Override
@@ -122,5 +136,10 @@ public class ReservationServiceImpl implements ReservationService {
         for (Reservation reservation : overdueReservations) {
             reservationRepository.delete(reservation);
         }
+    }
+    @Override
+    public List<Reservation> findOverduePickups() {
+        LocalDateTime now = LocalDateTime.now();
+        return reservationRepository.findAllByPickUpByBeforeAndCheckedOutAtIsNull(now);
     }
 }

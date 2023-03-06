@@ -53,6 +53,7 @@ const Books = () => {
             <BsSearch className='fs-5' onClick={search}/>
         </span>
       </div>
+      <div><h2>Admin Books</h2></div>
       <div className="table-responsive">
       { books.length > 0 ? (
       <table>

@@ -2,17 +2,21 @@ import React, { useState, useEffect } from 'react';
 import axios from '../api/axios';
 import formatDate from '../components/formatDate';
 import { Link } from 'react-router-dom';
+import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 
 const OverdueBooks = () => {
 
   const [loading, setLoading] = useState(false);
-  const [reservations, setReservations] = useState([]);
+  const [overdueReservations, setOverdueReservations] = useState([]);
+  const [overduePickups, setOverduePickups] = useState([]);
+  const [purged, setPurged] = useState(false);
+  const [tabIndex, setTabIndex] = useState(0);
 
   useEffect(() => {
     setLoading(true);
     axios.get('/reservations/overdue-checkins')
       .then((res) => {
-        setReservations(res.data);
+        setOverdueReservations(res.data);
         console.log(res.data);
         setLoading(false);
       })
@@ -22,8 +26,46 @@ const OverdueBooks = () => {
       });
   }, []);
 
+  useEffect(() => {
+    setLoading(true);
+    axios.get('/reservations/overdue-pickups')
+      .then((res) => {
+        setOverduePickups(res.data);
+        console.log(res.data);
+        setLoading(false);
+      })
+      .catch((err) => {
+        console.error(err);
+        setLoading(false);
+      });
+  }, [purged]);
+
+  const purgeNonPickedUpReservations = async () => {
+    try{
+      setPurged(false);
+      axios.delete('/reservations/purge-non-picked-up');
+        setPurged(true);
+        alert('Overdue Pick-ups Purged');
+      }
+      catch(err) {
+        console.log(err);
+      }
+  };
+
+  const handleTabClick = (index) => {
+    setTabIndex(index);
+  };
+
   return (
     <>
+
+    <Tabs selectedIndex={tabIndex} onSelect={handleTabClick}>
+      <TabList>
+        <Tab>Overdue Returns</Tab>
+        <Tab>Overdue Pick-ups</Tab>
+      </TabList>
+
+    <TabPanel>
     <h2 className='m-5'>Overdue Returns</h2>
     <div className='m-5'>
       <table>
@@ -40,7 +82,7 @@ const OverdueBooks = () => {
           </tr>
         </thead>
         <tbody>
-          {reservations && reservations.map((reservation) => (
+          {overdueReservations && overdueReservations.map((reservation) => (
             <tr key={reservation.id}>
               <td>{reservation.id}</td>
               <td>{reservation.user.email}</td>
@@ -58,8 +100,47 @@ const OverdueBooks = () => {
           ))}
         </tbody>
       </table>
-      <button className='m-5'>Purge non pick-ups</button>
     </div>
+    </TabPanel>
+    <TabPanel>
+    <h2 className='m-5'>Overdue Pick-ups</h2>
+    <div className='m-5'>
+      <table>
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Email</th>
+            <th>Reserved At</th>
+            <th>Pick Up By</th>
+            <th>Checked Out At</th>
+            <th>Due Date</th>
+            <th>Returned</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          {overduePickups && overduePickups.map((reservation) => (
+            <tr key={reservation.id}>
+              <td>{reservation.id}</td>
+              <td>{reservation.user.email}</td>
+              <td>{formatDate(reservation.reservedAt)}</td>
+              <td>{formatDate(reservation.pickUpBy)}</td>
+              <td>{formatDate(reservation.checkedOutAt)}</td>
+              <td>{formatDate(reservation.dueDate)}</td>
+              <td>{reservation.returned ? "Yes" : "No"}</td>
+              <td>
+                <Link to={`/edit-reservation/${reservation.id}`}>
+                  <button>Manage</button>
+                </Link>
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+      <button className='m-5' onClick={purgeNonPickedUpReservations}>Purge non pick-ups</button>
+    </div>
+    </TabPanel>
+    </Tabs>
     </>
   );
 };

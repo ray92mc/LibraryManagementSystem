@@ -1,12 +1,15 @@
 package com.x00179223.librarybackend.service;
 
+import com.x00179223.librarybackend.exceptions.ResourceNotFoundException;
 import com.x00179223.librarybackend.model.User;
 import com.x00179223.librarybackend.model.UserUpdateRequest;
 import com.x00179223.librarybackend.repository.UserRepository;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -33,6 +36,7 @@ public class UserServiceImpl implements UserService {
         }
         return userRepository.save(user);
     }
+
     @Override
     public Optional<User> findById(Long id) {
         return userRepository.findById(id);
@@ -57,4 +61,26 @@ public class UserServiceImpl implements UserService {
         existingUser.setPassword(existingUser.getPassword());
         return userRepository.save(existingUser);
     }
+
+    @Override
+    public void addFine(Long userId, double fine) {
+        User user = userRepository.findById(userId).orElseThrow(() -> new EntityNotFoundException("User not found"));
+
+        // Check if user has already received a fine today
+        LocalDate today = LocalDate.now();
+        if (user.getLastFineAddedAt() != null && user.getLastFineAddedAt().equals(today)) {
+            System.out.println("User has already received a fine today, do not add another one");
+            return;
+        }
+
+        double newFine = user.getFine() + fine;
+        if (newFine > 50.0) {
+            newFine = 50.0;
+        }
+        user.setFine(newFine);
+        user.setLastFineAddedAt(today);
+        userRepository.save(user);
+    }
+
+
 }

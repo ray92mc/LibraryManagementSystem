@@ -52,6 +52,7 @@ return (
             <BsSearch className='fs-5' onClick={search}/>
         </span>
       </div>
+      <div><h2>Admin Users</h2></div>
     <table>
       <thead>
         <tr>
