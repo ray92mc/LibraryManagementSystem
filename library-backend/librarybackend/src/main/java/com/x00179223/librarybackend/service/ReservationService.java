@@ -16,6 +16,8 @@ public interface ReservationService {
 
     Reservation findReservationById(Long id);
 
+    List<Reservation> findReservationsByUserId(Long userId);
+
     Reservation extendDueDate(Long reservationId);
 
     List<Reservation> findOverdueCheckins();

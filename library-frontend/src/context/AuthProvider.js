@@ -18,9 +18,13 @@ export const AuthProvider = ({ children }) => {
       localStorage.getItem('auth')
     );
 
+    const [id, setId] = useState(
+      localStorage.getItem('userId')
+    );
+
     console.log(auth);
   return (
-    <AuthContext.Provider value={{ isLoggedIn, setIsLoggedIn, isAdmin, setIsAdmin, auth, setAuth }}>
+    <AuthContext.Provider value={{ isLoggedIn, setIsLoggedIn, isAdmin, setIsAdmin, auth, setAuth, id, setId }}>
       {children}
     </AuthContext.Provider>
   );

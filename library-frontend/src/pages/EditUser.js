@@ -28,11 +28,11 @@ const EditUser = () => {
             console.error(err);
             setLoading(false);
           });
-      }, [id]);
+    }, [id]);
 
-      if (loading) {
-        return <p>Loading...</p>;
-      }
+    if (loading) {
+      return <p>Loading...</p>;
+    }
 
   const handleSubmit = async (e) => {
     e.preventDefault();

@@ -74,6 +74,12 @@ public class ReservationController {
         }
     }
 
+    @GetMapping("/userId/{id}")
+    public ResponseEntity<List<Reservation>> getReservationsByUserId(@PathVariable Long id){
+        List<Reservation> reservations = reservationService.findReservationsByUserId(id);
+        return ResponseEntity.ok(reservations);
+    }
+
     @GetMapping("/overdue-checkins")
     public ResponseEntity<List<Reservation>> getOverdueCheckins() {
         List<Reservation> overdueReservations = reservationService.findOverdueCheckins();

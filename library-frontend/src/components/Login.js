@@ -7,7 +7,7 @@ import AuthContext from "../context/AuthProvider";
 const LOGIN_URL = '/auth/authenticate';
 
 const Login = () => {
-    const { setIsLoggedIn, setIsAdmin } = useContext(AuthContext);
+    const { setIsLoggedIn, setIsAdmin, setId } = useContext(AuthContext);
 
     const emailRef = useRef();
     const errRef = useRef();
@@ -41,16 +41,18 @@ const Login = () => {
             console.log(response?.data);
 
             const token = response?.data?.token;
-
             const role = response?.data.role;
+            const id = response?.data.id;
 
             localStorage.setItem('isAdmin', role === 'ADMIN');
             setIsAdmin(role === 'ADMIN');
+            localStorage.setItem('userId', id);
+            setId(id);
 
             setEmail('');
             setPwd('');
             setIsLoggedIn(true);
-            localStorage.setItem('auth', {email, pwd, token, role})
+            localStorage.setItem('auth', {email, pwd, token, role, id})
             localStorage.setItem('isLoggedIn', true);
             localStorage.setItem('token', token);
             setSuccess(true);

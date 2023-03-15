@@ -19,6 +19,9 @@ public interface ReservationRepository extends JpaRepository<Reservation, Long> 
     @Query("SELECT r FROM Reservation r WHERE r.pickUpBy < :now AND r.checkedOutAt IS NULL")
     List<Reservation> findAllByPickUpByBeforeAndCheckedOutAtIsNull(LocalDateTime now);
 
+    @Query("SELECT r FROM Reservation r WHERE r.user.id = :userId")
+    List<Reservation> findReservationsByUserId(Long userId);
+
     @Query("SELECT r FROM Reservation r WHERE r.checkedOutAt IS NOT NULL AND r.dueDate < :currentDateTime AND r.returned = false")
     List<Reservation> findAllByCheckedOutAtIsNotNullAndDueDateBeforeAndReturnedIsFalse(@Param("currentDateTime") LocalDateTime currentDateTime);
 }
