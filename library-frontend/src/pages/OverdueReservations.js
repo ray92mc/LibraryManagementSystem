@@ -43,7 +43,7 @@ const OverdueBooks = () => {
   const purgeNonPickedUpReservations = async () => {
     try{
       setPurged(false);
-      axios.delete('/reservations/purge-non-picked-up');
+      axios.get('/reservations/purge-non-picked-up');
         setPurged(true);
         alert('Overdue Pick-ups Purged');
       }

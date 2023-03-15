@@ -70,7 +70,7 @@ const AddReservation = () => {
                 <button>Cancel</button>
                 <button>Checkin</button>
                 <button>Checkout</button>
-            </Card.Body>
+            </Card.Body> 
           </Card>
           <Link to="/admin-reservations">
           <button>Back to Reservations</button>

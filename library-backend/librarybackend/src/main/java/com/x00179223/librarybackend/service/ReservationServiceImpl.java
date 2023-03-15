@@ -5,10 +5,12 @@ import com.x00179223.librarybackend.model.Book;
 import com.x00179223.librarybackend.model.Reservation;
 import com.x00179223.librarybackend.model.User;
 import com.x00179223.librarybackend.repository.ReservationRepository;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
@@ -123,7 +125,7 @@ public class ReservationServiceImpl implements ReservationService {
                 if (fine > 50.0) {
                     fine = 50.0;
                 }
-                userService.addFine(user.getId(), fine);
+                addFine(reservation.getId(), user.getId(), fine);
             }
         }
         return overdueReservations;
@@ -142,4 +144,22 @@ public class ReservationServiceImpl implements ReservationService {
         LocalDateTime now = LocalDateTime.now();
         return reservationRepository.findAllByPickUpByBeforeAndCheckedOutAtIsNull(now);
     }
+
+    @Override
+    public void addFine(Long reservationId, Long userId, double fine) {
+        User user = userService.findById(userId).orElseThrow(() -> new EntityNotFoundException("User not found"));
+        Reservation reservation = reservationRepository.findById(reservationId).orElseThrow(() -> new EntityNotFoundException("Reservation not found"));
+
+        // Check if reservation has already received a fine today
+        LocalDate today = LocalDate.now();
+        if (reservation.getLastFineAddedAt() != null && reservation.getLastFineAddedAt().equals(today)) {
+            System.out.println("User has already received a fine for this reservation today, do not add another one");
+            return;
+        }
+
+        user.setFine(fine);
+        reservation.setLastFineAddedAt(today);
+        userService.addFine(user);
+    }
+
 }

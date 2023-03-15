@@ -66,24 +66,9 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void addFine(Long userId, double fine) {
-        User user = userRepository.findById(userId).orElseThrow(() -> new EntityNotFoundException("User not found"));
-
-        // Check if user has already received a fine today
-        LocalDate today = LocalDate.now();
-        if (user.getLastFineAddedAt() != null && user.getLastFineAddedAt().equals(today)) {
-            System.out.println("User has already received a fine today, do not add another one");
-            return;
-        }
-
-        double newFine = user.getFine() + fine;
-        if (newFine > 50.0) {
-            newFine = 50.0;
-        }
-        user.setFine(newFine);
-        user.setLastFineAddedAt(today);
-        emailService.sendOverdueEmail(user);
-        userRepository.save(user);
+    public User addFine(User user) {
+        userRepository.findById(user.getId()).orElseThrow(() -> new RuntimeException("User not found"));
+        return userRepository.save(user);
     }
 
 

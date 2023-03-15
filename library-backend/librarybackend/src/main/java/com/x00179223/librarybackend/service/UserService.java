@@ -13,5 +13,5 @@ public interface UserService {
     List<User> findAll();
     void deleteById(Long id);
     User updateUser(Long id, UserUpdateRequest request);
-    void addFine(Long userId, double fine);
+    User addFine(User user);
 }

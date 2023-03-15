@@ -1,5 +1,4 @@
 package com.x00179223.librarybackend.service;
-import com.x00179223.librarybackend.model.Book;
 import com.x00179223.librarybackend.model.Reservation;
 
 import java.util.List;
@@ -22,6 +21,8 @@ public interface ReservationService {
     List<Reservation> findOverdueCheckins();
 
     void purgeNonPickedUpReservations();
+
+    void addFine(Long reservationId, Long userId, double fine);
 
     List<Reservation> findOverduePickups();
 
