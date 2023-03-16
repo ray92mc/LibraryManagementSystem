@@ -24,7 +24,7 @@ public interface ReservationService {
 
     void purgeNonPickedUpReservations();
 
-    void addFine(Long reservationId, Long userId, double fine);
+    void addFine(Long reservationId, Long userId);
 
     List<Reservation> findOverduePickups();
 

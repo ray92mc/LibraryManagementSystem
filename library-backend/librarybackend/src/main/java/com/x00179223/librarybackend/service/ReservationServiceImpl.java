@@ -128,11 +128,7 @@ public class ReservationServiceImpl implements ReservationService {
         for (Reservation reservation : overdueReservations) {
             User user = reservation.getUser();
             if (user != null) {
-                double fine = user.getFine() + 0.50;
-                if (fine > 50.0) {
-                    fine = 50.0;
-                }
-                addFine(reservation.getId(), user.getId(), fine);
+                addFine(reservation.getId(), user.getId());
             }
         }
         return overdueReservations;
@@ -153,7 +149,7 @@ public class ReservationServiceImpl implements ReservationService {
     }
 
     @Override
-    public void addFine(Long reservationId, Long userId, double fine) {
+    public void addFine(Long reservationId, Long userId) {
         User user = userService.findById(userId).orElseThrow(() -> new EntityNotFoundException("User not found"));
         Reservation reservation = reservationRepository.findById(reservationId).orElseThrow(() -> new EntityNotFoundException("Reservation not found"));
 
@@ -162,6 +158,11 @@ public class ReservationServiceImpl implements ReservationService {
         if (reservation.getLastFineAddedAt() != null && reservation.getLastFineAddedAt().equals(today)) {
             System.out.println("User has already received a fine for this reservation today, do not add another one");
             return;
+        }
+
+        double fine = user.getFine() + 0.50;
+        if (fine > 50.0) {
+            fine = 50.0;
         }
 
         user.setFine(fine);
