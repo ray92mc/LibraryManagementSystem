@@ -129,7 +129,12 @@ const EditReservation = () => {
                 <p>Returned: {reservation?.checkedOutAt? (reservation?.returned ? 'Yes' : 'No') : 'N/A'}</p>
               </Card.Text>
                 <button onClick={() => extendReservation()}>Extend</button>
-                <button onClick={() => cancelReservation()}>Cancel</button>
+                { !reservation.checkedOutAt ? (
+                <button onClick={() => cancelReservation(reservation.id)}>Cancel</button>) : <button
+                disabled={reservation.checkedOutAt}
+                className={reservation.checkedOutAt ? "btn btn-secondary" : "button"}
+                >Cancel</button>
+                }
                 <button onClick={() => checkinReservation()}>Checkin</button>
                 <button onClick={() => checkoutReservation()}>Checkout</button>
             </Card.Body>
