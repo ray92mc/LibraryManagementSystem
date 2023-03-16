@@ -4,14 +4,15 @@ import { BsSearch } from "react-icons/bs";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHeart  } from "@fortawesome/free-solid-svg-icons";
 import {AuthContext} from "../context/AuthProvider";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const Books = () => {
 
   const [books, setBooks] = useState([]);
   const [loading, setLoading] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
-  const { isLoggedIn } = useContext(AuthContext);
+  const { isLoggedIn, id } = useContext(AuthContext);
+  const navigate = useNavigate();
 
   useEffect(() => {
     setLoading(true);
@@ -34,6 +35,40 @@ const Books = () => {
     } catch (error) {
       console.error(error);
       setBooks([]);
+    }
+  };
+
+  const reserveBook = async (bookId) => {
+    setLoading(true)
+    try{
+      const response = await axios.post('/reservations', {
+        userId: id,
+        bookId,
+      });
+      console.log(response);
+      alert("Book reserved")
+      setLoading(false);
+    }catch (err){
+      console.error(err);
+      setLoading(false);
+    }
+  };
+
+  const addFavourite = async (bookId) => {
+    setLoading(true)
+    try{
+      const response = await axios.put('/users/add-to-favourites', {
+        userId: id,
+        bookId,
+      });
+      console.log(response);
+      alert("Book added to favourites")
+      setLoading(false);
+      navigate('/favourites');
+    }catch (err){
+      console.error(err);
+      alert(err);
+      setLoading(false);
     }
   };
 
@@ -78,7 +113,7 @@ const Books = () => {
             <td>
             { isLoggedIn ? (
             <button
-              onClick={() => alert(book.id)}
+              onClick={() => reserveBook(book.id)}
               disabled={book.quantityAvailable < 1}
               className={book.quantityAvailable < 1 ? "btn btn-secondary" : "button"}
             >
@@ -91,7 +126,7 @@ const Books = () => {
             </button></Link> )
             }
             { isLoggedIn ? (
-            <button onClick={() => alert(book.id)}>
+            <button onClick={() => addFavourite(book.id)}>
               <FontAwesomeIcon icon={faHeart} />
             </button> ) : (" ")
             }

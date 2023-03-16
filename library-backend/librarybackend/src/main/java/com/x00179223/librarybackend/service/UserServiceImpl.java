@@ -1,5 +1,8 @@
 package com.x00179223.librarybackend.service;
 
+import com.x00179223.librarybackend.exceptions.ResourceNotFoundException;
+import com.x00179223.librarybackend.model.Book;
+import com.x00179223.librarybackend.model.BookIdUserIdRequest;
 import com.x00179223.librarybackend.model.User;
 import com.x00179223.librarybackend.model.UserUpdateRequest;
 import com.x00179223.librarybackend.repository.UserRepository;
@@ -8,6 +11,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -16,12 +20,16 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private UserRepository userRepository;
 
+    @Autowired
+    private BookService bookService;
+
     private final EmailService emailService;
 
-    public UserServiceImpl(PasswordEncoder passwordEncoder, UserRepository userRepository, EmailService emailService) {
+    public UserServiceImpl(PasswordEncoder passwordEncoder, UserRepository userRepository, EmailService emailService, BookService bookService) {
         this.passwordEncoder = passwordEncoder;
         this.userRepository = userRepository;
         this.emailService = emailService;
+        this.bookService = bookService;
     }
 
     @Override
@@ -54,7 +62,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User updateUser(Long id, UserUpdateRequest request) {
-        User existingUser = userRepository.findById(id).orElseThrow(() -> new RuntimeException("User not found"));
+        User existingUser = userRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("User not found"));
         existingUser.setEmail(request.getEmail());
         existingUser.setFirstname(request.getFirstname());
         existingUser.setLastname(request.getLastname());
@@ -64,14 +72,42 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User addFine(User user) {
-        userRepository.findById(user.getId()).orElseThrow(() -> new RuntimeException("User not found"));
+        userRepository.findById(user.getId()).orElseThrow(() -> new ResourceNotFoundException("User not found"));
         return userRepository.save(user);
     }
+
     @Override
     public User updatePassword(User user) {
-        User existingUser = userRepository.findById(user.getId()).orElseThrow(() -> new RuntimeException("User not found"));
+        User existingUser = userRepository.findById(user.getId()).orElseThrow(() -> new ResourceNotFoundException("User not found"));
         existingUser.setPassword(user.getPassword());
         return userRepository.save(existingUser);
+    }
+
+    @Override
+    public Set<Book> addToFavourites(BookIdUserIdRequest request) {
+        User existingUser = userRepository.findById(request.getUserId()).orElseThrow(() -> new ResourceNotFoundException("User not found"));
+        Book existingBook = bookService.findById(request.getBookId()).orElseThrow(() -> new ResourceNotFoundException("Book not found"));
+        Set<Book> favourites = existingUser.getFavourites();
+        favourites.add(existingBook);
+        existingUser.setFavourites(favourites);
+        userRepository.save(existingUser);
+        return favourites;
+    }
+
+    @Override
+    public Set<Book> getFavourites(Long userId) {
+        User existingUser = userRepository.findById(userId).orElseThrow(() -> new ResourceNotFoundException("User not found"));
+        return existingUser.getFavourites();
+    }
+
+    @Override
+    public void removeFavourite(BookIdUserIdRequest request) {
+        User existingUser = userRepository.findById(request.getUserId()).orElseThrow(() -> new ResourceNotFoundException("User not found"));
+        Book existingBook = bookService.findById(request.getBookId()).orElseThrow(() -> new ResourceNotFoundException("Book not found"));
+        Set<Book> favourites = existingUser.getFavourites();
+        favourites.remove(existingBook);
+        existingUser.setFavourites(favourites);
+        userRepository.save(existingUser);
     }
 
 

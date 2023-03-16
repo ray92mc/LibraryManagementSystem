@@ -6,11 +6,10 @@ import { useContext } from 'react';
 import AuthContext from "../context/AuthProvider";
 
 const Header = () => {
-    const { isLoggedIn } = useContext(AuthContext);
-    const { isAdmin } = useContext(AuthContext);
+    const { isLoggedIn, isAdmin, id } = useContext(AuthContext);
     const [searchQuery, setSearchQuery] = useState("");
     const navigate = useNavigate();
-    const { setIsLoggedIn, setIsAdmin } = useContext(AuthContext);
+    const { setIsLoggedIn, setIsAdmin, setId } = useContext(AuthContext);
     
 
     const logout = async () => {
@@ -18,10 +17,12 @@ const Header = () => {
         // axios to /logout endpoint 
         setIsLoggedIn(false);
         setIsAdmin(false);
+        setId(null);
         localStorage.setItem('isLoggedIn', false)
         localStorage.setItem('isAdmin', false);
         localStorage.setItem('auth', {});
         localStorage.removeItem('token');
+        localStorage.removeItem('id');
         navigate('/logged-out');
     }
 

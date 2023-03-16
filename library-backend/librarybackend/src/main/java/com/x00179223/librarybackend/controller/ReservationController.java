@@ -1,7 +1,7 @@
 package com.x00179223.librarybackend.controller;
 
 import com.x00179223.librarybackend.exceptions.ResourceNotFoundException;
-import com.x00179223.librarybackend.model.BookUserIdRequest;
+import com.x00179223.librarybackend.model.BookIdUserIdRequest;
 import com.x00179223.librarybackend.model.Reservation;
 import com.x00179223.librarybackend.service.ReservationService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,7 +9,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 @RestController
@@ -25,7 +24,7 @@ public class ReservationController {
     }
 
     @PostMapping
-    public ResponseEntity<Reservation> reserveBook(@RequestBody BookUserIdRequest request) {
+    public ResponseEntity<Reservation> reserveBook(@RequestBody BookIdUserIdRequest request) {
         Reservation reservation = reservationService.reserveBook(request.getBookId(), request.getUserId());
         return ResponseEntity.ok(reservation);
     }
