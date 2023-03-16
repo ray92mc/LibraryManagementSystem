@@ -33,4 +33,11 @@ public class AuthenticationController {
         return ResponseEntity.ok(service.authenticate(request));
     }
 
+    @PostMapping("/update-password")
+    public ResponseEntity<AuthenticationResponse> updatePassword(
+            @RequestBody UpdatePasswordRequest request
+    ){
+        return ResponseEntity.ok(service.updatePassword(request));
+    }
+
 }

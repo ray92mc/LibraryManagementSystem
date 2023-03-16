@@ -3,12 +3,9 @@ package com.x00179223.librarybackend.service;
 import com.x00179223.librarybackend.model.User;
 import com.x00179223.librarybackend.model.UserUpdateRequest;
 import com.x00179223.librarybackend.repository.UserRepository;
-import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-
-import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -69,6 +66,12 @@ public class UserServiceImpl implements UserService {
     public User addFine(User user) {
         userRepository.findById(user.getId()).orElseThrow(() -> new RuntimeException("User not found"));
         return userRepository.save(user);
+    }
+    @Override
+    public User updatePassword(User user) {
+        User existingUser = userRepository.findById(user.getId()).orElseThrow(() -> new RuntimeException("User not found"));
+        existingUser.setPassword(user.getPassword());
+        return userRepository.save(existingUser);
     }
 
 

@@ -26,8 +26,10 @@ import LoggedOut from './pages/LoggedOut';
 import { AuthProvider } from './context/AuthProvider';
 import OverdueReservations from './pages/OverdueReservations';
 import Favourites from './pages/Favourites';
-import UserLoans from './pages/UserLoans';
 import UserAccountDetails from './pages/UserAccountDetails';
+import UserEditDetails from './pages/UserEditDetails';
+import UserReservations from './pages/UserReservations';
+import ChangePassword from './components/ChangePassword';
 
 function App() {
 
@@ -54,8 +56,10 @@ function App() {
         {/* private routes */}
         {/* <Route element={<RequireAuth allowedRoles={['USER', 'ADMIN']}/>}> */}
         <Route path ="favourites" element={<Favourites />} />
-        <Route path ="user-loans" element={<UserLoans />} />
+        <Route path ="user-loans" element={<UserReservations />} />
         <Route path ="user-account-details" element={<UserAccountDetails />} />
+        <Route path ="user-edit-details" element={<UserEditDetails />} />
+        <Route path ="change-password" element={<ChangePassword />} />
 
         {/* </Route> */}
 

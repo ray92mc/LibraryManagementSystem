@@ -5,26 +5,11 @@ import AuthContext from "../context/AuthProvider";
 import formatDate from "../components/formatDate";
 import { Link } from 'react-router-dom';
 
-const UserAccountDetails = () => {
+const UserReservations = () => {
 
-  const [user, setUser] = useState({});
   const [reservations, setReservations] = useState([]);
   const [loading, setLoading] = useState(false);
   const { id } = useContext(AuthContext);
-
-  useEffect(() => {
-    setLoading(true);
-    axios
-      .get(`/users/id/${id}`)
-      .then((res) => {
-        setUser(res?.data);
-        setLoading(false);
-      })
-      .catch((err) => {
-        console.error(err);
-        setLoading(false);
-      });
-  }, [id]);
 
   useEffect(() => {
     setLoading(true);
@@ -57,35 +42,7 @@ const UserAccountDetails = () => {
   return (
     <>
     <div className='container-xxl'>
-      <h1 className='m-5'>Account Details</h1>
-      <Row className="align-items-stretch">
-        <Col className='mb-5'>
-          <Card>
-            <Card.Body>
-              <Card.Title>User Details</Card.Title>
-              <Card.Text>
-                <div className='mb-4 mt-4'>
-                <p>Account ID: {user?.id}</p>
-                <p>First Name: {user?.firstname}</p>
-                <p>Last Name: {user?.lastname}</p>
-                <p>Email: {user?.email}</p>
-                <p>Role: {user?.role}</p>
-                { user?.fine > 0 ? 
-                <p style={{ color: "red" }}>Fine Owed: €{user?.fine}</p> : <p>Fine Owed: €{user?.fine}</p>
-                }
-                <p>Enabled: {user?.enabled ? 'Yes' : 'No'}</p>
-                <p>Account Non-Expired: {user?.accountNonExpired ? 'Yes' : 'No'}</p>
-                <p>Credentials Non-Expired: {user?.credentialsNonExpired ? 'Yes' : 'No'}</p>
-                <p>Account Non-Locked: {user?.accountNonLocked ? 'Yes' : 'No'}</p>
-                </div>
-              </Card.Text>
-              <Link to="/user-edit-details"><button>Edit Details</button></Link>
-              <Link to="/change-password"><button>Change Password</button></Link>
-              <button onClick={() => alert()}>Pay Fine</button>
-            </Card.Body>
-          </Card>
-        </Col>
-      </Row>
+      <h1 className='m-5'>Your Reservations</h1>
       <Row>
         <Col className='mb-5'>
           <Card>
@@ -139,4 +96,4 @@ const UserAccountDetails = () => {
   );
 }
 
-export default UserAccountDetails
+export default UserReservations

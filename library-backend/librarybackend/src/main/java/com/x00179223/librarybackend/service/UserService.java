@@ -14,4 +14,5 @@ public interface UserService {
     void deleteById(Long id);
     User updateUser(Long id, UserUpdateRequest request);
     User addFine(User user);
+    User updatePassword(User user);
 }

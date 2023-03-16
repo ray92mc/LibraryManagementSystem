@@ -71,4 +71,16 @@ public class AuthenticationService {
                 .id(user.getId())
                 .build();
     }
+
+    public AuthenticationResponse updatePassword(UpdatePasswordRequest request) {
+        User user = userService.findById(request.getId()).orElseThrow(() -> new RuntimeException("User not found"));
+        user.setPassword((passwordEncoder.encode(request.getPassword())));
+        userService.updatePassword(user);
+        var jwtToken = jwtService.generateToken(user);
+        return AuthenticationResponse.builder()
+                .token(jwtToken)
+                .role(user.getRole())
+                .id(user.getId())
+                .build();
+    }
 }
