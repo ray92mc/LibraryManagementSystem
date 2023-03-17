@@ -57,7 +57,7 @@ const UserReservations = () => {
                   <th>Reserved At</th>
                   <th>Pick Up By</th>
                   <th>Checked Out At</th>
-                  <th>Due Date</th>
+                  <th>Return Date</th>
                   <th>Returned</th>
                   <th>Actions</th>
                   </tr>

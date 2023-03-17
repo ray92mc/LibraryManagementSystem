@@ -34,7 +34,7 @@ const EditReservation = () => {
       try{
         const response = await axios.put(`/reservations/${id}/extend`);
         setReservation(response.data);
-        alert("Reservation due date extended by 7 days")
+        alert("Reservation return date extended by 7 days")
       }catch (err) {
         console.log(err);
       }
@@ -125,7 +125,7 @@ const EditReservation = () => {
                 <p>Reserved At: {formatDate(reservation?.reservedAt)}</p>
                 <p>Pick Up By: {formatDate(reservation?.pickUpBy)}</p>
                 <p>Checked Out At: {reservation?.checkedOutAt ? formatDate(reservation?.checkedOutAt) : 'N/A'}</p>
-                <p>Due Date: {formatDate(reservation?.dueDate)}</p>
+                <p>Return Date: {formatDate(reservation?.dueDate)}</p>
                 <p>Returned: {reservation?.checkedOutAt? (reservation?.returned ? 'Yes' : 'No') : 'N/A'}</p>
               </Card.Text>
                 <button onClick={() => extendReservation()}>Extend</button>

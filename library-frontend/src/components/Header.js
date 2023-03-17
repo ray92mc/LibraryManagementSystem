@@ -6,7 +6,7 @@ import { useContext } from 'react';
 import AuthContext from "../context/AuthProvider";
 
 const Header = () => {
-    const { isLoggedIn, isAdmin, id } = useContext(AuthContext);
+    const { isLoggedIn, isAdmin } = useContext(AuthContext);
     const [searchQuery, setSearchQuery] = useState("");
     const navigate = useNavigate();
     const { setIsLoggedIn, setIsAdmin, setId } = useContext(AuthContext);
