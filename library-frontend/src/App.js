@@ -30,6 +30,7 @@ import UserAccountDetails from './pages/UserAccountDetails';
 import UserEditDetails from './pages/UserEditDetails';
 import UserReservations from './pages/UserReservations';
 import ChangePassword from './components/ChangePassword';
+import StripeCheckout from './components/StripeCheckout';
 
 function App() {
 
@@ -60,8 +61,7 @@ function App() {
         <Route path ="user-account-details" element={<UserAccountDetails />} />
         <Route path ="user-edit-details" element={<UserEditDetails />} />
         <Route path ="change-password" element={<ChangePassword />} />
-
-        {/* </Route> */}
+        <Route path ="checkout" element={<StripeCheckout />} />
 
         {/* admin routes */}
         <Route element={<RequireAuth allowedRoles={true}/>}> 
