@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -119,20 +120,26 @@ public class ReservationServiceImpl implements ReservationService {
         return reservationRepository.save(reservation);
     }
 
-    @Scheduled(fixedRate = 4 * 60 * 60 * 1000) // run every 4 hours (1000=1second)
+    @Scheduled(fixedRate = 4 * 60 * 60 * 1000L) // run every 4 hours (1000=1second)
     @Override
     public List<Reservation> findOverdueCheckins() {
-        System.out.println("Checking for overdue reservations");
-        LocalDateTime now = LocalDateTime.now();
-        List<Reservation> overdueReservations = reservationRepository.findAllByCheckedOutAtIsNotNullAndDueDateBeforeAndReturnedIsFalse(now);
-        for (Reservation reservation : overdueReservations) {
-            User user = reservation.getUser();
-            if (user != null) {
-                addFine(reservation.getId(), user.getId());
+        try {
+            System.out.println("Checking for overdue reservations");
+            LocalDateTime now = LocalDateTime.now();
+            List<Reservation> overdueReservations = reservationRepository.findAllByCheckedOutAtIsNotNullAndDueDateBeforeAndReturnedIsFalse(now);
+            for (Reservation reservation : overdueReservations) {
+                User user = reservation.getUser();
+                if (user != null) {
+                    addFine(reservation.getId(), user.getId());
+                }
             }
+            return overdueReservations;
+        } catch (Exception e) {
+            System.err.println("Error occurred while finding overdue check-ins: " + e.getMessage());
+            return Collections.emptyList();
         }
-        return overdueReservations;
     }
+
 
     @Override
     public void purgeNonPickedUpReservations() {
@@ -161,13 +168,15 @@ public class ReservationServiceImpl implements ReservationService {
         }
 
         double fine = user.getFine() + 0.50;
-        if (fine > 50.0) {
+        if (fine > 51.0) {
             fine = 50.0;
         }
 
         user.setFine(fine);
-        reservation.setLastFineAddedAt(today);
         userService.addFine(user);
+
+        reservation.setLastFineAddedAt(today);
+        reservationRepository.save(reservation);
     }
 
 }
