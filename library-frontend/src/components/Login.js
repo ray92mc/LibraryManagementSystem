@@ -1,6 +1,6 @@
 import { useRef, useState, useEffect } from "react"
 import { useContext } from "react";
-import {Link} from 'react-router-dom';
+import {Link, useNavigate} from 'react-router-dom';
 import axios from "../api/axios";
 import AuthContext from "../context/AuthProvider";
 
@@ -15,7 +15,7 @@ const Login = () => {
     const [email, setEmail] = useState('');
     const [pwd, setPwd] = useState('');
     const [errMsg, setErrMsg] = useState('');
-    const [success, setSuccess] = useState(false);
+    const navigate = useNavigate();
 
     useEffect(() => {
         emailRef.current.focus();
@@ -55,7 +55,8 @@ const Login = () => {
             localStorage.setItem('auth', {email, pwd, token, role, id})
             localStorage.setItem('isLoggedIn', true);
             localStorage.setItem('token', token);
-            setSuccess(true);
+            alert("Logged in!")
+            navigate("/");
         
         } catch (err) {
             if (!err?.response) {
@@ -74,14 +75,6 @@ const Login = () => {
 
     return(
         <>
-        {success ? (
-            <section className="success-page">
-                <h1>Success!</h1>
-                <p>
-                   You are logged in!
-                </p>
-            </section>
-        ) : (
         <section className="auth-form">
             <p ref={errRef} className={errMsg ? "errmsg" : "offscreen"} aria-live="assertive">{errMsg}</p>
             <h1>Sign In</h1>
@@ -112,7 +105,7 @@ const Login = () => {
                     <Link to="/register">Sign Up</Link>
                 </span>
             </p>
-        </section>)}
+        </section>
         </>
     )
 }

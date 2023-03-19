@@ -16,7 +16,7 @@ public class PaymentGatewayController {
         this.stripeClient = stripeClient;
     }
     @PostMapping("/charge")
-    public ChargeResponse chargeCard(@RequestHeader(value="token") String token, @RequestHeader(value="amount") Double amount) throws Exception {
-        return this.stripeClient.chargeNewCard(token, amount);
+    public ChargeResponse chargeCard(@RequestHeader(value="token") String token, @RequestHeader(value="amount") Double amount, @RequestHeader(value="userId") Long userId) throws Exception {
+        return this.stripeClient.chargeNewCard(token, amount, userId);
     }
 }

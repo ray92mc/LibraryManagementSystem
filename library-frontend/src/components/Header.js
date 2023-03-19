@@ -12,20 +12,19 @@ const Header = () => {
     const { setIsLoggedIn, setIsAdmin, setId } = useContext(AuthContext);
     
 
-    const logout = async () => {
-        // if used in more components, this should be in context 
-        // axios to /logout endpoint 
+    const logout = (e) => {
+        e.preventDefault();
         setIsLoggedIn(false);
         setIsAdmin(false);
         setId(null);
-        localStorage.setItem('isLoggedIn', false)
-        localStorage.setItem('isAdmin', false);
-        localStorage.setItem('auth', {});
+        localStorage.setItem('isLoggedIn', 'false');
+        localStorage.setItem('isAdmin', 'false');
         localStorage.removeItem('token');
         localStorage.removeItem('id');
-        navigate('/logged-out');
+        localStorage.removeItem('auth');
+        alert("Logged out!")
+        navigate(`/`);
     }
-
 
     const search = (e) => {
         e.preventDefault();

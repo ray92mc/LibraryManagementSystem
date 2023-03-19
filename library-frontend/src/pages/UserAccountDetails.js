@@ -4,12 +4,14 @@ import { Card, Col, Row } from "react-bootstrap";
 import AuthContext from "../context/AuthProvider";
 import formatDate from "../components/formatDate";
 import { Link } from 'react-router-dom';
+import Stripe from "react-stripe-checkout";
 
 const UserAccountDetails = () => {
 
   const [user, setUser] = useState({});
   const [reservations, setReservations] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [finePaid, setFinePaid] = useState(false);
   const { id } = useContext(AuthContext);
 
   useEffect(() => {
@@ -24,7 +26,7 @@ const UserAccountDetails = () => {
         console.error(err);
         setLoading(false);
       });
-  }, [id]);
+  }, [id, finePaid]);
 
   useEffect(() => {
     setLoading(true);
@@ -49,6 +51,22 @@ const UserAccountDetails = () => {
       alert(err);
     }
   };
+
+  async function handleToken(token) {
+    console.log(token);
+    await axios.post("/payment/charge", "", { 
+        headers: {
+        token: token.id,
+        amount: user?.fine,
+        userId: user?.id
+        },
+    }).then(() => {
+        alert("Payment Success");
+        setFinePaid(true);
+      }).catch((error) => {
+          alert(error);
+    });
+  }
 
   if (loading) {
     return <p>Loading...</p>;
@@ -81,7 +99,10 @@ const UserAccountDetails = () => {
               </Card.Text>
               <Link to="/user-edit-details"><button>Edit Details</button></Link>
               <Link to="/change-password"><button>Change Password</button></Link>
-              <button onClick={() => alert()}>Pay Fine</button>
+              <Stripe
+                stripeKey="pk_test_51Hs4PpDNHqlXLssuLBb1e6Diq8zmEWDewsbZ6VhDX1k1S0UNJpiZPnYPKt7mKdqqllq5QatcKnhax4ExJkoDLXvE002V3T0UDu"
+                token={handleToken} label="Pay Your Fine"
+            />
             </Card.Body>
           </Card>
         </Col>
