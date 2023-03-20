@@ -7,6 +7,7 @@ import com.x00179223.librarybackend.service.BookService;
 import com.x00179223.librarybackend.service.BookServiceImpl;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -18,44 +19,47 @@ import java.util.Optional;
 public class BookController {
 
     @Autowired
-    private final BookServiceImpl bookServiceImpl;
+    private final BookService bookService;
 
     public BookController(BookServiceImpl bookServiceImpl) {
-        this.bookServiceImpl = bookServiceImpl;
+        this.bookService = bookServiceImpl;
     }
 
     @GetMapping
-    public List<Book> getAllBooks() {
-        return bookServiceImpl.findAll();
+    public Page<Book> getAllBooks(@RequestParam(defaultValue = "0") int page,
+                                  @RequestParam(defaultValue = "10") int size,
+                                  @RequestParam(defaultValue = "title") String sortField,
+                                  @RequestParam(defaultValue = "asc") String sortDirection) {
+        return bookService.findAll(page, size, sortField, sortDirection);
     }
 
     @GetMapping("/{id}")
     public Optional<Book> getBookById(@PathVariable Long id) {
-        return bookServiceImpl.findById(id);
+        return bookService.findById(id);
     }
 
     @PostMapping
     public Book addBook(@RequestBody Book book) {
-        return bookServiceImpl.save(book);
+        return bookService.save(book);
     }
 
     @PutMapping("/{id}")
     public Book updateBook(@PathVariable Long id, @RequestBody Book book) {
-        return bookServiceImpl.update(id, book);
+        return bookService.update(id, book);
     }
 
     @PutMapping("/rate/{id}")
     public Book rateBook(@PathVariable Long id, @RequestBody double rating) {
-        return bookServiceImpl.rateBook(id, rating);
+        return bookService.rateBook(id, rating);
     }
 
     @DeleteMapping("/{id}")
     public void deleteBook(@PathVariable Long id) {
-        bookServiceImpl.delete(id);
+        bookService.delete(id);
     }
 
     @GetMapping("/search/{query}")
     public List<Book> searchBooks(@PathVariable String query) throws JsonProcessingException {
-        return bookServiceImpl.searchByTitleOrAuthorOrGenre(query.toLowerCase());
+        return bookService.searchByTitleOrAuthorOrGenre(query.toLowerCase());
     }
 }

@@ -168,7 +168,7 @@ public class ReservationServiceImpl implements ReservationService {
         }
 
         double fine = user.getFine() + 0.50;
-        if (fine > 51.0) {
+        if (fine > 50.0) {
             fine = 50.0;
         }
 

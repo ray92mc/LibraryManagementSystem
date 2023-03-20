@@ -642,3 +642,54 @@ color: white;
   border-radius: 0 4px 4px 4px;
 }
 /* React tabs end */
+
+.controls {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
+  font-size: 14px;
+  font-weight: 400;
+  text-transform: uppercase;
+}
+
+.controls label {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.controls select {
+  background-color: var(--color-232f3e);
+  color: white;
+  border: none;
+  padding: 5px;
+  border-radius: 2px;
+}
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  list-style-type: none;
+  padding: 0;
+  margin: 20px 0;
+}
+
+.pagination li {
+  margin: 0 5px;
+}
+
+.pagination li a {
+  padding: 5px 10px;
+  border: 1px solid var(--color-3b4149);
+  text-decoration: none;
+  color: #fff;
+  background-color: var(--color-131921);
+}
+
+.pagination li a:hover,
+.pagination li.active a {
+  background-color: var(--color-febd69);
+  border-color: var(--color-febd69);
+  color: var(--color-131921);
+}
+

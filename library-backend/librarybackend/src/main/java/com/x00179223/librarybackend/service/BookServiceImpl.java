@@ -3,7 +3,11 @@ package com.x00179223.librarybackend.service;
 import com.x00179223.librarybackend.model.Book;
 import com.x00179223.librarybackend.repository.BookRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.PageRequest;
 
 import java.util.List;
 import java.util.Optional;
@@ -46,8 +50,15 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public List<Book> findAll() {
-        return bookRepository.findAll();
+    public Page<Book> findAll(int page, int size, String sortField, String sortDirection) {
+        Sort sort = Sort.by(sortField);
+        if ("desc".equals(sortDirection)) {
+            sort = sort.descending();
+        }
+
+        Pageable pageable = PageRequest.of(page, size, sort);
+
+        return bookRepository.findAll(pageable);
     }
 
     @Override
