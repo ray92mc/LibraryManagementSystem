@@ -3,7 +3,7 @@ import axios from '../api/axios';
 import { Card, Col, Row } from "react-bootstrap";
 import AuthContext from "../context/AuthProvider";
 import formatDate from "../components/formatDate";
-import { Link } from 'react-router-dom';
+import { toast } from 'react-toastify';
 
 const UserReservations = () => {
 
@@ -28,10 +28,26 @@ const UserReservations = () => {
   const cancelReservation = async (reservationId) => {
     try {
       await axios.delete(`/reservations/cancel/${reservationId}`);
-      alert("Reservation cancelled")
+      toast.success("Reservation Cancelled!", {
+        position: toast.POSITION.TOP_CENTER,
+        autoClose: 4000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+    });
       setReservations(reservations.filter(reservation => reservation.id !== reservationId));
     } catch (err) {
-      alert(err);
+      toast.error(err, {
+        position: toast.POSITION.TOP_CENTER,
+        autoClose: 4000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+    });
     }
   };
 

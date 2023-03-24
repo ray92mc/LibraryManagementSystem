@@ -31,6 +31,8 @@ import UserEditDetails from './pages/UserEditDetails';
 import UserReservations from './pages/UserReservations';
 import ChangePassword from './components/ChangePassword';
 import StripeCheckout from './components/StripeCheckout';
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function App() {
 
@@ -83,6 +85,7 @@ function App() {
 
       </Route>
     </Routes>
+    <ToastContainer />
     </AuthProvider>
     </div>
   );

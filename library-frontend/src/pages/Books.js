@@ -6,6 +6,7 @@ import { faHeart } from "@fortawesome/free-solid-svg-icons";
 import { AuthContext } from "../context/AuthProvider";
 import { Link, useNavigate } from "react-router-dom";
 import ReactPaginate from "react-paginate";
+import { toast } from 'react-toastify';
 
 const Books = () => {
   const [books, setBooks] = useState([]);
@@ -64,17 +65,17 @@ const Books = () => {
 
   const handleSortFieldChange = (event) => {
     setSortField(event.target.value);
-    setPage(1); // Reset the page number to 1
+    setPage(1); 
   };
   
   const handleSortDirectionChange = (event) => {
     setSortDirection(event.target.value);
-    setPage(1); // Reset the page number to 1
+    setPage(1); 
   };
   
   const handleSizeChange = (event) => {
     setSize(parseInt(event.target.value));
-    setPage(1); // Reset the page number to 1
+    setPage(1); 
   };
 
   const reserveBook = async (bookId) => {
@@ -85,8 +86,17 @@ const Books = () => {
         bookId,
       });
       console.log(response);
-      alert("Book reserved")
+      toast.success("Book Reserved!", {
+        position: toast.POSITION.TOP_CENTER,
+        autoClose: 4000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
       setLoading(false);
+      navigate("/user-loans");
     }catch (err){
       console.error(err);
       setLoading(false);
@@ -101,7 +111,15 @@ const Books = () => {
         bookId,
       });
       console.log(response);
-      alert("Book added to favourites")
+      toast.success("Added to Favourites!", {
+        position: toast.POSITION.TOP_CENTER,
+        autoClose: 4000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
       setLoading(false);
       navigate('/favourites');
     }catch (err){
@@ -228,7 +246,7 @@ const Books = () => {
             onPageChange={handlePageClick}
             containerClassName={"pagination"}
             activeClassName={"active"}
-            forcePage={page - 1} // Add this line
+            forcePage={page - 1} 
           />
         </>
       )}

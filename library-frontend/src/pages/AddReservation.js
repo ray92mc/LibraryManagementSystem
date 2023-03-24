@@ -5,6 +5,7 @@ import axios from '../api/axios';
 import { Card, Col, Row, Form } from "react-bootstrap";
 import { Link } from 'react-router-dom';
 import formatDate from '../components/formatDate';
+import {toast} from 'react-toastify';
 
 const AddReservation = () => {
 
@@ -40,8 +41,16 @@ const AddReservation = () => {
       setReservation(response.data);
       setSuccess(true);
     }catch (err){
-      console.error(err);
-      alert(err);
+      const errorMessage = err.response?.data?.message || err.message || "An error occurred";
+      toast.error(errorMessage, {
+        position: toast.POSITION.TOP_CENTER,
+        autoClose: 4000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+    });
       setLoading(false);
     }
   };

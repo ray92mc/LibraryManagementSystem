@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useContext } from 'react';
 import AuthContext from "../context/AuthProvider";
+import { toast } from 'react-toastify';
 
 const Header = () => {
     const { isLoggedIn, isAdmin } = useContext(AuthContext);
@@ -22,8 +23,16 @@ const Header = () => {
         localStorage.removeItem('token');
         localStorage.removeItem('id');
         localStorage.removeItem('auth');
-        alert("Logged out!")
-        navigate(`/`);
+        toast.success("Logged out!", {
+            position: toast.POSITION.TOP_CENTER,
+            autoClose: 4000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+        });
+        navigate("/");
     }
 
     const search = (e) => {
@@ -167,7 +176,6 @@ const Header = () => {
                 </div>
             </div>
         </header>
-        
     </>
   );
 };
