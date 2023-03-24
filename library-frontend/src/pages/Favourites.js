@@ -2,6 +2,7 @@ import { React, useState, useEffect, useContext } from "react";
 import axios from "../api/axios";
 import AuthContext from "../context/AuthProvider";
 import { toast } from "react-toastify";
+import { Link } from "react-router-dom";
 
 const Favourites = () => {
 
@@ -98,7 +99,7 @@ const Favourites = () => {
             >
               {book.quantityAvailable<1 ? "Out of Stock": "Reserve"}
             </button>
-            <button onClick={() => removeFavourite(book.id)}>Delete</button>
+            <button onClick={() => removeFavourite(book.id)}>Remove</button>
             </td>
           </tr>
           ))}
@@ -107,9 +108,12 @@ const Favourites = () => {
       ) : <h1 className="py-5">No favourites found...</h1>
       }
       </div>
+    
       </>
       )
       }
+      <Link to="/books">
+      <button className="mb-5">Back to Books</button></Link>
     </div>
     );
   }
