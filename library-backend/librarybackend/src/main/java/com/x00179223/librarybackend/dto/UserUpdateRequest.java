@@ -1,4 +1,4 @@
-package com.x00179223.librarybackend.model;
+package com.x00179223.librarybackend.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

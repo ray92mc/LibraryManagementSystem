@@ -1,18 +1,15 @@
 package com.x00179223.librarybackend.controller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.x00179223.librarybackend.model.Book;
 import com.x00179223.librarybackend.service.BookService;
 import com.x00179223.librarybackend.service.BookServiceImpl;
-import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
-
 @RestController
 @RequestMapping(value = "api/v1/books")
 @CrossOrigin(origins = "http://localhost:3000")

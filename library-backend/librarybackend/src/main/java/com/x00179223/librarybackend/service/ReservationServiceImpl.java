@@ -1,6 +1,6 @@
 package com.x00179223.librarybackend.service;
 
-import com.x00179223.librarybackend.exceptions.ResourceNotFoundException;
+import com.x00179223.librarybackend.exception.ResourceNotFoundException;
 import com.x00179223.librarybackend.model.Book;
 import com.x00179223.librarybackend.model.Reservation;
 import com.x00179223.librarybackend.model.User;

@@ -1,4 +1,4 @@
-package com.x00179223.librarybackend.exceptions;
+package com.x00179223.librarybackend.exception;
 
 public class ResourceNotFoundException extends RuntimeException {
 

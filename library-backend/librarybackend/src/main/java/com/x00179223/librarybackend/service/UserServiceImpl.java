@@ -1,10 +1,10 @@
 package com.x00179223.librarybackend.service;
 
-import com.x00179223.librarybackend.exceptions.ResourceNotFoundException;
+import com.x00179223.librarybackend.exception.ResourceNotFoundException;
 import com.x00179223.librarybackend.model.Book;
-import com.x00179223.librarybackend.model.BookIdUserIdRequest;
+import com.x00179223.librarybackend.dto.BookIdUserIdRequest;
 import com.x00179223.librarybackend.model.User;
-import com.x00179223.librarybackend.model.UserUpdateRequest;
+import com.x00179223.librarybackend.dto.UserUpdateRequest;
 import com.x00179223.librarybackend.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;

@@ -4,7 +4,7 @@ import com.stripe.Stripe;
 import com.stripe.model.Charge;
 import com.stripe.model.Customer;
 import com.x00179223.librarybackend.dto.ChargeResponse;
-import com.x00179223.librarybackend.exceptions.ResourceNotFoundException;
+import com.x00179223.librarybackend.exception.ResourceNotFoundException;
 import com.x00179223.librarybackend.model.User;
 import com.x00179223.librarybackend.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;

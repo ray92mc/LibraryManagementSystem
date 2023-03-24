@@ -1,7 +1,7 @@
 package com.x00179223.librarybackend.controller;
 
-import com.x00179223.librarybackend.exceptions.ResourceNotFoundException;
-import com.x00179223.librarybackend.model.BookIdUserIdRequest;
+import com.x00179223.librarybackend.exception.ResourceNotFoundException;
+import com.x00179223.librarybackend.dto.BookIdUserIdRequest;
 import com.x00179223.librarybackend.model.Reservation;
 import com.x00179223.librarybackend.service.ReservationService;
 import org.springframework.beans.factory.annotation.Autowired;
