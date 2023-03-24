@@ -3,6 +3,7 @@ import axios from '../api/axios';
 import formatDate from '../components/formatDate';
 import { Link } from 'react-router-dom';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
+import { toast } from 'react-toastify';
 
 const OverdueBooks = () => {
 
@@ -21,7 +22,8 @@ const OverdueBooks = () => {
         setLoading(false);
       })
       .catch((err) => {
-        console.error(err);
+        const errorMessage = err.response?.data?.message || err.message || "An error occurred";
+        toast.error(errorMessage);
         setLoading(false);
       });
   }, []);
@@ -35,7 +37,8 @@ const OverdueBooks = () => {
         setLoading(false);
       })
       .catch((err) => {
-        console.error(err);
+        const errorMessage = err.response?.data?.message || err.message || "An error occurred";
+        toast.error(errorMessage);
         setLoading(false);
       });
   }, [purged]);
@@ -45,16 +48,21 @@ const OverdueBooks = () => {
       setPurged(false);
       axios.get('/reservations/purge-non-picked-up');
         setPurged(true);
-        alert('Overdue Pick-ups Purged');
+        toast.success('Overdue Pick-ups Purged');
       }
       catch(err) {
-        console.log(err);
+        const errorMessage = err.response?.data?.message || err.message || "An error occurred";
+        toast.error(errorMessage);
       }
   };
 
   const handleTabClick = (index) => {
     setTabIndex(index);
   };
+
+  if (loading) {
+    return <p>Loading...</p>;
+  }
 
   return (
     <>

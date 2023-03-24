@@ -3,6 +3,7 @@ import axios from '../api/axios';
 import { Card, Col, Row } from "react-bootstrap";
 import { useNavigate, useParams, Link } from 'react-router-dom';
 import formatDate from '../components/formatDate';
+import { toast } from 'react-toastify';
 
 
 const EditReservation = () => {
@@ -34,19 +35,21 @@ const EditReservation = () => {
       try{
         const response = await axios.put(`/reservations/${id}/extend`);
         setReservation(response.data);
-        alert("Reservation return date extended by 7 days")
+        toast.success("Reservation return date extended by 7 days")
       }catch (err) {
-        console.log(err);
+        const errorMessage = err.response?.data?.message || err.message || "An error occurred";
+        toast.error(errorMessage);
       }
     }
 
     const cancelReservation = async () => {
       try {
         await axios.delete(`/reservations/cancel/${id}`);
-        alert("Reservation cancelled")
+        toast.success("Reservation cancelled")
         navigate("/admin-reservations");
       } catch (err) {
-        console.log(err);
+        const errorMessage = err.response?.data?.message || err.message || "An error occurred";
+        toast.error(errorMessage);
       }
     };
 
@@ -54,9 +57,10 @@ const EditReservation = () => {
       try{
         const response = await axios.put(`/reservations/checkin/${id}`);
         setReservation(response.data);
-        alert("Reservation checked in")
+        toast.success("Reservation checked in")
       }catch (err) {
-        console.log(err);
+        const errorMessage = err.response?.data?.message || err.message || "An error occurred";
+        toast.error(errorMessage);
       }
     }
 
@@ -64,9 +68,10 @@ const EditReservation = () => {
       try{
         const response = await axios.put(`/reservations/checkout/${id}`);
         setReservation(response.data);
-        alert("Reservation checked out")
+        toast.success("Reservation checked out")
       }catch (err) {
-        console.log(err);
+        const errorMessage = err.response?.data?.message || err.message || "An error occurred";
+        toast.error(errorMessage);
       }
     }
 

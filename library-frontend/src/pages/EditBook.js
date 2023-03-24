@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from '../api/axios';
 import { Card, Col, Row, Form } from "react-bootstrap";
 import { Link, useNavigate, useParams } from 'react-router-dom';
+import { toast } from 'react-toastify';
 
 const EditBook = () => {
 
@@ -44,7 +45,6 @@ const EditBook = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    // make API call to update book details
     const response = await axios.put(`/books/${id}`, {
       title,
       author,
@@ -53,10 +53,12 @@ const EditBook = () => {
       quantityAvailable,
       rating,
       isbn
+    }).catch((err) => {
+      const errorMessage = err.response?.data?.message || err.message || "An error occurred";
+      toast.error(errorMessage);
     });
-    alert("Book saved");
+    toast.success("Book saved");
     navigate("/admin-books");
-    // update local state with new book details
     setBook(response.data);
   };
 
@@ -66,11 +68,12 @@ const EditBook = () => {
       .delete(`/books/${id}`)
       .then(() => {
         setLoading(false);
-        alert("Book deleted");
+        toast.success("Book deleted");
         navigate("/admin-books");
       })
       .catch((err) => {
-        console.error(err);
+        const errorMessage = err.response?.data?.message || err.message || "An error occurred";
+        toast.error(errorMessage);
         setLoading(false);
       });
   };

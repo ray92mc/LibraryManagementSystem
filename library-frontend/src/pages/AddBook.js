@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import axios from '../api/axios';
 import { Card, Col, Row, Form } from "react-bootstrap";
-import { Link, useNavigate, useParams } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
 
 const AddBook = () => {
 
@@ -30,9 +31,10 @@ const handleSubmit = async (e) => {
       ratingCount,
       ratingTotal
     }).catch((err) => {
-        console.log(err);
+      const errorMessage = err.response?.data?.message || err.message || "An error occurred";
+      toast.error(errorMessage);
     });
-    alert("Book saved");
+    toast.success("Book saved");
     navigate("/admin-books");
   };
 

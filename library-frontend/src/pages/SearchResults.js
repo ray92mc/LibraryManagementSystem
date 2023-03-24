@@ -6,6 +6,7 @@ import {AuthContext} from '../context/AuthProvider';
 import { faHeart } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Link } from 'react-router-dom';
+import { toast } from 'react-toastify';
 
 const SearchResults = () => {
 
@@ -20,14 +21,18 @@ const SearchResults = () => {
     axios.get(`/books/search/${query}`)
     .then((res) => {
       setBooks(res.data);
-      console.log(res.data)
       setLoading(false);
     })
     .catch((err) => {
-      console.error(err);
+      const errorMessage = err.response?.data?.message || err.message || "An error occurred";
+      toast.error(errorMessage);
       setLoading(false);
     });
   }, [query]);
+
+  if (loading) {
+    return <p>Loading...</p>;
+  }
 
   return (
     <>

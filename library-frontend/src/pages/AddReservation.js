@@ -40,17 +40,10 @@ const AddReservation = () => {
       console.log(response);
       setReservation(response.data);
       setSuccess(true);
+      toast.success("Reservation confirmed!");
     }catch (err){
       const errorMessage = err.response?.data?.message || err.message || "An error occurred";
-      toast.error(errorMessage, {
-        position: toast.POSITION.TOP_CENTER,
-        autoClose: 4000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-    });
+      toast.error(errorMessage);
       setLoading(false);
     }
   };

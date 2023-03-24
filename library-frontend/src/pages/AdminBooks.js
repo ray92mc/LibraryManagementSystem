@@ -3,6 +3,7 @@ import axios from "../api/axios";
 import { BsSearch } from "react-icons/bs";
 import { Link } from "react-router-dom";
 import ReactPaginate from "react-paginate";
+import { toast } from "react-toastify";
 
 const AdminBooks = () => {
   const [books, setBooks] = useState([]);
@@ -26,6 +27,9 @@ const AdminBooks = () => {
             sortField,
             sortDirection,
           },
+        }).catch((err) => {
+          const errorMessage = err.response?.data?.message || err.message || "An error occurred";
+          toast.error(errorMessage);
         });
         setBooks(response.data.content);
         setTotalPages(response.data.totalPages);
@@ -44,8 +48,9 @@ const AdminBooks = () => {
       const response = await axios.get(`/books/search/${searchQuery}`);
       const data = response.data;
       setBooks(data);
-    } catch (error) {
-      console.error(error);
+    } catch (err) {
+      const errorMessage = err.response?.data?.message || err.message || "An error occurred";
+      toast.error(errorMessage);
       setBooks([]);
     }
   };

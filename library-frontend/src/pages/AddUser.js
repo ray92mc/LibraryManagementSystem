@@ -4,7 +4,8 @@ import { useEffect, useRef } from 'react';
 import axios from '../api/axios';
 import { faCheck, faTimes, faInfoCircle } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
+import { toast } from 'react-toastify';
 
 const USER_REGEX = /^[A-z][A-z0-9-_]{2,23}$/;
 const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
@@ -91,16 +92,11 @@ const AddUser = () => {
               password: pwd
           });
           console.log(response.data);
+          toast.success("User Added!")
           setSuccess(true);
       }catch (err) {
-          if(!err?.response){
-              setErrMsg('No Server Response')
-          } else if (err.response?.status === 409){
-              setErrMsg('Username Taken');
-          } else {
-              setErrMsg('Registration Failed')
-          }
-          errRef.current.focus();
+            const errorMessage = err.response?.data?.message || err.message || "An error occurred";
+            toast.error(errorMessage);
       }
   }
 

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from '../api/axios';
 import { Card, Col, Row, Form } from "react-bootstrap";
 import { Link, useNavigate, useParams } from 'react-router-dom';
+import { toast } from 'react-toastify';
 
 const EditUser = () => {
 
@@ -41,8 +42,11 @@ const EditUser = () => {
       firstname,
       lastname,
       email
+    }).catch((err) => {
+      const errorMessage = err.response?.data?.message || err.message || "An error occurred";
+      toast.error(errorMessage);
     });
-    alert("User edited successfully");
+    toast.success("User edited successfully");
     setUser(response.data);
     navigate("/admin-users");
   };
@@ -53,7 +57,7 @@ const EditUser = () => {
       .delete(`/users/${id}`)
       .then(() => {
         setLoading(false);
-        alert("User deleted");
+        toast.success("User deleted");
         navigate("/admin-users");
       })
       .catch((err) => {

@@ -96,24 +96,10 @@ const Register = () => {
             });
             console.log(response.data);
             setSuccess(true);
-            toast.success("Registered!", {
-                position: toast.POSITION.TOP_CENTER,
-                autoClose: 4000,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-                progress: undefined,
-            });
+            toast.success("Registered!");
         }catch (err) {
-            if(!err?.response){
-                setErrMsg('No Server Response')
-            } else if (err.response?.status === 409){
-                setErrMsg('Username Taken');
-            } else {
-                setErrMsg('Registration Failed')
-            }
-            errRef.current.focus();
+            const errorMessage = err.response?.data?.message || err.message || "An error occurred";
+            toast.error(errorMessage);
         }
     }
 

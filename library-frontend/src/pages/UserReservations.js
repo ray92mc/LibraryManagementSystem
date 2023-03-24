@@ -39,15 +39,8 @@ const UserReservations = () => {
     });
       setReservations(reservations.filter(reservation => reservation.id !== reservationId));
     } catch (err) {
-      toast.error(err, {
-        position: toast.POSITION.TOP_CENTER,
-        autoClose: 4000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-    });
+      const errorMessage = err.response?.data?.message || err.message || "An error occurred";
+      toast.error(errorMessage);
     }
   };
 

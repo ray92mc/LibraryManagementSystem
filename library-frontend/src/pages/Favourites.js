@@ -1,6 +1,7 @@
 import { React, useState, useEffect, useContext } from "react";
 import axios from "../api/axios";
 import AuthContext from "../context/AuthProvider";
+import { toast } from "react-toastify";
 
 const Favourites = () => {
 
@@ -16,7 +17,8 @@ const Favourites = () => {
       setLoading(false);
     })
     .catch((err) => {
-      console.error(err);
+      const errorMessage = err.response?.data?.message || err.message || "An error occurred";
+      toast.error(errorMessage);
       setLoading(false);
     });
   }, [id]);
@@ -29,10 +31,11 @@ const Favourites = () => {
         bookId,
       });
       console.log(response);
-      alert("Book reserved")
+      toast.success("Book reserved")
       setLoading(false);
     }catch (err){
-      console.error(err);
+      const errorMessage = err.response?.data?.message || err.message || "An error occurred";
+      toast.error(errorMessage);
       setLoading(false);
     }
   };
@@ -45,11 +48,12 @@ const Favourites = () => {
         bookId,
       });
       console.log(response);
-      alert("Book reserved")
+      toast.success("Book reserved")
       setBooks(books.filter(book => book.id !== bookId));
       setLoading(false);
     }catch (err){
-      console.error(err);
+      const errorMessage = err.response?.data?.message || err.message || "An error occurred";
+      toast.error(errorMessage);
       setLoading(false);
     }
   };

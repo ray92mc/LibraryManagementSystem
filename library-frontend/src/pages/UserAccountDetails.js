@@ -5,6 +5,7 @@ import AuthContext from "../context/AuthProvider";
 import formatDate from "../components/formatDate";
 import { Link } from 'react-router-dom';
 import Stripe from "react-stripe-checkout";
+import { toast } from 'react-toastify';
 
 const UserAccountDetails = () => {
 
@@ -45,10 +46,11 @@ const UserAccountDetails = () => {
   const cancelReservation = async (reservationId) => {
     try {
       await axios.delete(`/reservations/cancel/${reservationId}`);
-      alert("Reservation cancelled")
+      toast.success("Reservation cancelled")
       setReservations(reservations.filter(reservation => reservation.id !== reservationId));
     } catch (err) {
-      alert(err);
+      const errorMessage = err.response?.data?.message || err.message || "An error occurred";
+      toast.error(errorMessage);
     }
   };
 
@@ -61,10 +63,11 @@ const UserAccountDetails = () => {
         userId: user?.id
         },
     }).then(() => {
-        alert("Payment Success");
+        toast.success("Payment Success");
         setFinePaid(true);
-      }).catch((error) => {
-          alert(error);
+      }).catch((err) => {
+        const errorMessage = err.response?.data?.message || err.message || "An error occurred";
+        toast.error(errorMessage);
     });
   }
 

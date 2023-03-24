@@ -3,6 +3,7 @@ import axios from '../api/axios';
 import { Card, Col, Row, Form } from "react-bootstrap";
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import AuthContext from '../context/AuthProvider';
+import { toast } from 'react-toastify';
 
 const UserEditDetails = () => {
 
@@ -42,8 +43,11 @@ const UserEditDetails = () => {
       firstname,
       lastname,
       email
+    }).catch((err) => {
+      const errorMessage = err.response?.data?.message || err.message || "An error occurred";
+      toast.error(errorMessage);
     });
-    alert("User edited successfully");
+    toast.success("User edited successfully");
     setUser(response.data);
     navigate("/user-account-details");
   };
@@ -54,7 +58,7 @@ const UserEditDetails = () => {
       .delete(`/users/${id}`)
       .then(() => {
         setLoading(false);
-        alert("User deleted");
+        toast.success("User deleted");
         navigate("/admin-users");
       })
       .catch((err) => {

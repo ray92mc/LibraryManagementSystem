@@ -36,8 +36,9 @@ const Books = () => {
         setBooks(response.data.content);
         setTotalPages(response.data.totalPages);
         setLoading(false);
-      } catch (error) {
-        console.error(error);
+      } catch (err) {
+        const errorMessage = err.response?.data?.message || err.message || "An error occurred";
+        toast.error(errorMessage);
         setLoading(false);
       }
     };
@@ -51,8 +52,9 @@ const Books = () => {
       const response = await axios.get(`/books/search/${searchQuery}`);
       const data = response.data;
       setBooks(data);
-    } catch (error) {
-      console.error(error);
+    } catch (err) {
+      const errorMessage = err.response?.data?.message || err.message || "An error occurred";
+      toast.error(errorMessage);
       setBooks([]);
     }
   };
@@ -86,19 +88,12 @@ const Books = () => {
         bookId,
       });
       console.log(response);
-      toast.success("Book Reserved!", {
-        position: toast.POSITION.TOP_CENTER,
-        autoClose: 4000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-      });
+      toast.success("Book Reserved!");
       setLoading(false);
       navigate("/user-loans");
     }catch (err){
-      console.error(err);
+      const errorMessage = err.response?.data?.message || err.message || "An error occurred";
+      toast.error(errorMessage);
       setLoading(false);
     }
   };
@@ -124,7 +119,8 @@ const Books = () => {
       navigate('/favourites');
     }catch (err){
       console.error(err);
-      alert(err);
+      const errorMessage = err.response?.data?.message || err.message || "An error occurred";
+      toast.error(errorMessage);
       setLoading(false);
     }
   };

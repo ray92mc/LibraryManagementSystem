@@ -54,26 +54,11 @@ const Login = () => {
       localStorage.setItem('auth', { email, pwd, token, role, id })
       localStorage.setItem('isLoggedIn', true);
       localStorage.setItem('token', token);
-      toast.success("Logged in!", {
-        position: toast.POSITION.TOP_CENTER,
-        autoClose: 4000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-      });
+      toast.success("Logged in!");
       navigate("/");
     } catch (err) {
-      if (!err?.response) {
-        setErrMsg('No Server Response');
-      } else if (err.response?.status === 400) {
-        setErrMsg('Missing Email or Password');
-      } else if (err.response?.status === 401) {
-        setErrMsg('Unauthorized');
-      } else {
-        setErrMsg('Login Failed');
-      }
+      const errorMessage = err.response?.data?.message || err.message || "An error occurred";
+      toast.error(errorMessage);
       errRef.current.focus();
     }
   }

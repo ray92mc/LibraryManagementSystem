@@ -3,6 +3,7 @@ import axios from "../api/axios";
 import { Link } from "react-router-dom";
 import { BsSearch } from "react-icons/bs";
 import formatDate from "../components/formatDate";
+import { toast } from "react-toastify";
 
 const AdminReservations = () => {
 
@@ -18,7 +19,8 @@ axios.get("/reservations")
     setLoading(false);
 })
 .catch((err) => {
-    console.error(err);
+    const errorMessage = err.response?.data?.message || err.message || "An error occurred";
+    toast.error(errorMessage);
     setLoading(false);
 });
 }, []);
@@ -28,8 +30,9 @@ const search = async () => {
       const response = await axios.get(`/reservations/${searchQuery}`);
       const data = response.data;
       setReservations([data]);
-    } catch (error) {
-      console.error(error);
+    } catch (err) {
+      const errorMessage = err.response?.data?.message || err.message || "An error occurred";
+      toast.error(errorMessage);
       setReservations([]);
     }
     };

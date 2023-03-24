@@ -4,6 +4,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import axios from "../api/axios";
 import { Link } from "react-router-dom";
 import AuthContext from "../context/AuthProvider";
+import { toast } from "react-toastify";
 
 const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
 
@@ -53,11 +54,8 @@ const ChangePassword = () => {
             console.log(response.data);
             setSuccess(true);
         }catch (err) {
-            if(!err?.response){
-                setErrMsg('No Server Response')
-            } else {
-                setErrMsg('Password Change Failed')
-            }
+            const errorMessage = err.response?.data?.message || err.message || "An error occurred";
+            toast.error(errorMessage);
             errRef.current.focus();
         }
     }

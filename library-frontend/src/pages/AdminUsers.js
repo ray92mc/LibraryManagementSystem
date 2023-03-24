@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import axios from "../api/axios";
 import { BsSearch } from "react-icons/bs";
 import { Link } from "react-router-dom";
+import { toast } from "react-toastify";
 
 function UserTable() {
   const [users, setUsers] = useState([]);
@@ -27,8 +28,9 @@ const search = async () => {
     const response = await axios.get(`/users/id/${searchQuery}`);
     const data = response.data;
     setUsers([data]);
-  } catch (error) {
-    console.error(error);
+  } catch (err) {
+      const errorMessage = err.response?.data?.message || err.message || "An error occurred";
+      toast.error(errorMessage);
     setUsers([]);
   }
   };

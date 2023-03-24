@@ -1,6 +1,7 @@
 import React from "react";
 import Stripe from "react-stripe-checkout";
 import axios from "../api/axios";
+import { toast } from "react-toastify";
 
 const StripeCheckout = () => {
     async function handleToken(token) {
@@ -11,9 +12,10 @@ const StripeCheckout = () => {
             amount: 500,
             },
         }).then(() => {
-            alert("Payment Success");
-            }).catch((error) => {
-                alert(error);
+            toast.success("Payment Success!");
+            }).catch((err) => {
+                const errorMessage = err.response?.data?.message || err.message || "An error occurred";
+                toast.error(errorMessage);
             });
         }
     return (
