@@ -1,14 +1,14 @@
 package com.x00179223.librarybackend.service;
 
+import com.x00179223.librarybackend.dto.BookIdUserIdRequest;
+import com.x00179223.librarybackend.dto.UserUpdateRequest;
 import com.x00179223.librarybackend.exception.ResourceNotFoundException;
 import com.x00179223.librarybackend.model.Book;
-import com.x00179223.librarybackend.dto.BookIdUserIdRequest;
 import com.x00179223.librarybackend.model.User;
-import com.x00179223.librarybackend.dto.UserUpdateRequest;
 import com.x00179223.librarybackend.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -16,19 +16,12 @@ import java.util.Set;
 @Service
 public class UserServiceImpl implements UserService {
 
-    private final PasswordEncoder passwordEncoder;
-    @Autowired
-    private UserRepository userRepository;
+    private final UserRepository userRepository;
+    private final BookService bookService;
 
     @Autowired
-    private BookService bookService;
-
-    private final EmailService emailService;
-
-    public UserServiceImpl(PasswordEncoder passwordEncoder, UserRepository userRepository, EmailService emailService, BookService bookService) {
-        this.passwordEncoder = passwordEncoder;
+    public UserServiceImpl(UserRepository userRepository, BookService bookService) {
         this.userRepository = userRepository;
-        this.emailService = emailService;
         this.bookService = bookService;
     }
 

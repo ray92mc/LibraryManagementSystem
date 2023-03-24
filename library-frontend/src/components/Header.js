@@ -23,15 +23,7 @@ const Header = () => {
         localStorage.removeItem('token');
         localStorage.removeItem('id');
         localStorage.removeItem('auth');
-        toast.success("Logged out!", {
-            position: toast.POSITION.TOP_CENTER,
-            autoClose: 4000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-        });
+        toast.success("Logged out!");
         navigate("/");
     }
 

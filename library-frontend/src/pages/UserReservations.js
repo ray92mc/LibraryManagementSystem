@@ -28,15 +28,7 @@ const UserReservations = () => {
   const cancelReservation = async (reservationId) => {
     try {
       await axios.delete(`/reservations/cancel/${reservationId}`);
-      toast.success("Reservation Cancelled!", {
-        position: toast.POSITION.TOP_CENTER,
-        autoClose: 4000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-    });
+      toast.success("Reservation Cancelled!");
       setReservations(reservations.filter(reservation => reservation.id !== reservationId));
     } catch (err) {
       const errorMessage = err.response?.data?.message || err.message || "An error occurred";

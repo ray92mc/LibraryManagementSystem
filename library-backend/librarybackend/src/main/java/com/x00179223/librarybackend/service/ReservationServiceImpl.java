@@ -1,6 +1,5 @@
 package com.x00179223.librarybackend.service;
 
-import com.x00179223.librarybackend.exception.ResourceNotFoundException;
 import com.x00179223.librarybackend.model.Book;
 import com.x00179223.librarybackend.model.Reservation;
 import com.x00179223.librarybackend.model.User;
@@ -23,7 +22,6 @@ public class ReservationServiceImpl implements ReservationService {
     private final BookService bookService;
     private final UserService userService;
 
-
     @Autowired
     public ReservationServiceImpl(ReservationRepository reservationRepository, BookService bookService, UserService userService) {
         this.reservationRepository = reservationRepository;
@@ -31,41 +29,30 @@ public class ReservationServiceImpl implements ReservationService {
         this.userService = userService;
     }
 
-    public ReservationServiceImpl(ReservationRepository reservationRepository, ReservationRepository reservationRepository1, BookService bookService, UserService userService, EmailService emailService) {
-        this.reservationRepository = reservationRepository1;
-        this.bookService = bookService;
-        this.userService = userService;
-    }
-
     @Override
     public Reservation reserveBook(Long bookId, Long userId) {
-        Optional<Book> book = bookService.findById(bookId);
-        Optional<User> user = userService.findById(userId);
-        if (book == null || user == null) {
-            throw new ResourceNotFoundException("Book or User not found");
-        }
-        if (book.get().getQuantityAvailable() <= 0) {
+        Book book = bookService.findById(bookId).orElseThrow(() -> new EntityNotFoundException("Book not found"));
+        User user = userService.findById(userId).orElseThrow(() -> new EntityNotFoundException("User not found"));
+
+        if (book.getQuantityAvailable() <= 0) {
             throw new IllegalArgumentException("Book is not available for reservation");
         }
         Reservation reservation = Reservation.builder()
-                .book(book.get())
-                .user(user.get())
+                .book(book)
+                .user(user)
                 .reservedAt(LocalDateTime.now())
                 .pickUpBy(LocalDateTime.now().plusDays(7))
                 .build();
-        book.get().setQuantityAvailable(book.get().getQuantityAvailable()-1);
+        book.setQuantityAvailable(book.getQuantityAvailable() - 1);
         reservationRepository.save(reservation);
-        bookService.save(book.get());
+        bookService.save(book);
         return reservation;
     }
 
     @Override
     public Reservation cancelReservation(Long reservationId) {
         Reservation reservation = findReservationById(reservationId);
-        if (reservation == null) {
-            throw new ResourceNotFoundException("Reservation not found");
-        }
-        reservation.getBook().setQuantityAvailable(reservation.getBook().getQuantityAvailable()+1);
+        reservation.getBook().setQuantityAvailable(reservation.getBook().getQuantityAvailable() + 1);
         reservationRepository.delete(reservation);
         bookService.save(reservation.getBook());
         return reservation;
@@ -74,9 +61,6 @@ public class ReservationServiceImpl implements ReservationService {
     @Override
     public Reservation checkOutBook(Long reservationId) {
         Reservation reservation = findReservationById(reservationId);
-        if (reservation == null) {
-            throw new ResourceNotFoundException("Reservation not found");
-        }
         reservation.setCheckedOutAt(LocalDateTime.now());
         reservation.setDueDate(LocalDateTime.now().plusDays(14));
         reservation.setReturned(false);
@@ -86,9 +70,6 @@ public class ReservationServiceImpl implements ReservationService {
     @Override
     public Reservation checkInBook(Long reservationId) {
         Reservation reservation = findReservationById(reservationId);
-        if (reservation == null) {
-            throw new ResourceNotFoundException("Reservation not found");
-        }
         reservation.setReturned(true);
         return reservationRepository.save(reservation);
     }
@@ -100,24 +81,20 @@ public class ReservationServiceImpl implements ReservationService {
 
     @Override
     public Reservation findReservationById(Long id) {
-        return reservationRepository.findById(id).orElse(null);
+        return reservationRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Reservation not found"));
     }
 
     @Override
     public List<Reservation> findReservationsByUserId(Long userId) {
         User user = userService.findById(userId).orElseThrow(() -> new EntityNotFoundException("User not found"));
         return reservationRepository.findReservationsByUserId(userId);
-
     }
 
     @Override
     public Reservation extendDueDate(Long reservationId) {
         Reservation reservation = findReservationById(reservationId);
-        if (reservation == null) {
-            throw new ResourceNotFoundException("Reservation not found");
-        }
         reservation.setDueDate(reservation.getDueDate().plusDays(7));
-        return reservationRepository.save(reservation);
+        return reservationRepository.save(        reservation);
     }
 
     @Scheduled(fixedRate = 4 * 60 * 60 * 1000L) // run every 4 hours (1000=1second)
@@ -140,7 +117,6 @@ public class ReservationServiceImpl implements ReservationService {
         }
     }
 
-
     @Override
     public void purgeNonPickedUpReservations() {
         LocalDateTime now = LocalDateTime.now();
@@ -160,7 +136,6 @@ public class ReservationServiceImpl implements ReservationService {
         User user = userService.findById(userId).orElseThrow(() -> new EntityNotFoundException("User not found"));
         Reservation reservation = reservationRepository.findById(reservationId).orElseThrow(() -> new EntityNotFoundException("Reservation not found"));
 
-        // Check if reservation has already received a fine today
         LocalDate today = LocalDate.now();
         if (reservation.getLastFineAddedAt() != null && reservation.getLastFineAddedAt().equals(today)) {
             System.out.println("User has already received a fine for this reservation today, do not add another one");
@@ -178,5 +153,5 @@ public class ReservationServiceImpl implements ReservationService {
         reservation.setLastFineAddedAt(today);
         reservationRepository.save(reservation);
     }
-
 }
+

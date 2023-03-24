@@ -2,21 +2,23 @@ package com.x00179223.librarybackend.service;
 
 import com.x00179223.librarybackend.model.Book;
 import com.x00179223.librarybackend.repository.BookRepository;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.PageRequest;
-
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.List;
 import java.util.Optional;
 
 @Service
 public class BookServiceImpl implements BookService {
-    @Autowired
     private final BookRepository bookRepository;
 
+    @Autowired
     public BookServiceImpl(BookRepository bookRepository) {
         this.bookRepository = bookRepository;
     }
@@ -33,7 +35,7 @@ public class BookServiceImpl implements BookService {
 
     @Override
     public Book update(Long id, Book book) {
-        Book existingBook = bookRepository.findById(id).orElseThrow(() -> new RuntimeException("Book not found"));
+        Book existingBook = bookRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Book not found"));
         existingBook.setTitle(book.getTitle());
         existingBook.setAuthor(book.getAuthor());
         existingBook.setGenre(book.getGenre());
@@ -45,8 +47,7 @@ public class BookServiceImpl implements BookService {
 
     @Override
     public List<Book> searchByTitleOrAuthorOrGenre(String query) {
-        List<Book> books = bookRepository.searchByTitleOrAuthorOrGenre(query);
-        return books;
+        return bookRepository.searchByTitleOrAuthorOrGenre(query);
     }
 
     @Override
@@ -67,21 +68,20 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public Book rateBook(Long id, double rating){
-        if(rating<0.1 || rating>5.0){
-            throw new RuntimeException("Array out of bounds: 0.1 - 5");
+    public Book rateBook(Long id, double rating) {
+        if (rating < 0.1 || rating > 5.0) {
+            throw new IllegalArgumentException("Rating value out of bounds: 0.1 - 5");
         }
-        Book existingBook = bookRepository.findById(id).orElseThrow(() -> new RuntimeException("Book not found"));
+        Book existingBook = bookRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Book not found"));
 
         double newRatingTotal = existingBook.getRatingTotal() + rating;
         int newRatingCount = existingBook.getRatingCount() + 1;
-        double newRating = newRatingTotal / newRatingCount;
+        double newRating = BigDecimal.valueOf(newRatingTotal / newRatingCount)
+                .setScale(2, RoundingMode.HALF_UP).doubleValue();
 
         existingBook.setRating(newRating);
         existingBook.setRatingCount(newRatingCount);
         existingBook.setRatingTotal(newRatingTotal);
         return bookRepository.save(existingBook);
     }
-
-
 }

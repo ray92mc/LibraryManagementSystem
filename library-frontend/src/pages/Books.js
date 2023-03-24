@@ -106,15 +106,7 @@ const Books = () => {
         bookId,
       });
       console.log(response);
-      toast.success("Added to Favourites!", {
-        position: toast.POSITION.TOP_CENTER,
-        autoClose: 4000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-      });
+      toast.success("Added to Favourites!");
       setLoading(false);
       navigate('/favourites');
     }catch (err){
