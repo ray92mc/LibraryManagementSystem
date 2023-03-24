@@ -48,7 +48,7 @@ const Favourites = () => {
         bookId,
       });
       console.log(response);
-      toast.success("Book reserved")
+      toast.success("Favourite Removed")
       setBooks(books.filter(book => book.id !== bookId));
       setLoading(false);
     }catch (err){
