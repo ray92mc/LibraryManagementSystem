@@ -149,7 +149,7 @@ public class ReservationServiceImpl implements ReservationService {
             fine = 50.0;
         }
 
-        emailService.sendOverdueEmail("X00179223@mytudublin.ie", "Overdue Book Return", "You have been issued a 50c charge for overdue book return.");
+        emailService.sendOverdueEmail(user.getEmail(), "Overdue Book Return", "You have been issued a 50c charge for overdue book return.");
         user.setFine(fine);
         userService.addFine(user);
 
