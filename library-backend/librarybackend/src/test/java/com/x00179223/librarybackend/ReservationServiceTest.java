@@ -32,13 +32,16 @@ class ReservationServiceImplTest {
     @Mock
     private UserService userService;
 
+    @Mock
+    private EmailService emailService;
+
 
     @BeforeEach
     public void setUp() {
         reservationRepository = mock(ReservationRepository.class);
         bookService = mock(BookService.class);
         userService = mock(UserService.class);
-        reservationService = new ReservationServiceImpl(reservationRepository, bookService, userService);
+        reservationService = new ReservationServiceImpl(reservationRepository, bookService, userService, emailService);
     }
 
     @Test

@@ -13,7 +13,6 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Collections;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class ReservationServiceImpl implements ReservationService {
@@ -22,11 +21,14 @@ public class ReservationServiceImpl implements ReservationService {
     private final BookService bookService;
     private final UserService userService;
 
+    private final EmailService emailService;
+
     @Autowired
-    public ReservationServiceImpl(ReservationRepository reservationRepository, BookService bookService, UserService userService) {
+    public ReservationServiceImpl(ReservationRepository reservationRepository, BookService bookService, UserService userService, EmailService emailService) {
         this.reservationRepository = reservationRepository;
         this.bookService = bookService;
         this.userService = userService;
+        this.emailService = emailService;
     }
 
     @Override
@@ -147,6 +149,7 @@ public class ReservationServiceImpl implements ReservationService {
             fine = 50.0;
         }
 
+        emailService.sendOverdueEmail("X00179223@mytudublin.ie", "Overdue Book Return", "You have been issued a 50c charge for overdue book return.");
         user.setFine(fine);
         userService.addFine(user);
 
